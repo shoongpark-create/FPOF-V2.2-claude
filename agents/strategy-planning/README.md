@@ -13,6 +13,41 @@ skills:
   - skills/strategy/brand-strategy.md
   - skills/strategy/md-planning.md
   - skills/strategy/line-sheet.md
+  - skills/pm-strategy/pestle-analysis.md
+  - skills/pm-strategy/porters-five-forces.md
+  - skills/pm-strategy/ansoff-matrix.md
+  - skills/pm-strategy/business-model-canvas.md
+  - skills/pm-strategy/lean-canvas.md
+  - skills/pm-strategy/startup-canvas.md
+  - skills/pm-strategy/monetization-strategy.md
+  - skills/pm-strategy/value-proposition.md
+  - skills/pm-strategy/product-strategy-canvas.md
+  - skills/pm-strategy/product-vision.md
+  - skills/pm-gtm/beachhead-segment.md
+  - skills/pm-gtm/competitive-battlecard.md
+  - skills/pm-discovery/opportunity-solution-tree.md
+  - skills/pm-discovery/brainstorm-ideas-existing.md
+  - skills/pm-discovery/brainstorm-ideas-new.md
+  - skills/pm-discovery/brainstorm-experiments-existing.md
+  - skills/pm-discovery/brainstorm-experiments-new.md
+  - skills/pm-discovery/identify-assumptions-existing.md
+  - skills/pm-discovery/identify-assumptions-new.md
+  - skills/pm-discovery/interview-script.md
+  - skills/pm-discovery/summarize-interview.md
+  - skills/pm-discovery/prioritize-assumptions.md
+  - skills/pm-discovery/prioritize-features.md
+  - skills/pm-discovery/analyze-feature-requests.md
+  - skills/pm-execution/brainstorm-okrs.md
+  - skills/pm-execution/create-prd.md
+  - skills/pm-execution/outcome-roadmap.md
+  - skills/pm-execution/stakeholder-map.md
+  - skills/pm-execution/summarize-meeting.md
+  - skills/pm-execution/sprint-plan.md
+  - skills/pm-execution/user-stories.md
+  - skills/pm-execution/job-stories.md
+  - skills/pm-execution/wwas.md
+  - skills/pm-toolkit/draft-nda.md
+  - skills/pm-toolkit/privacy-policy.md
 ---
 
 # 전략기획실 (Strategy Planning Agency)
@@ -102,3 +137,39 @@ skills:
 
 → 사용자 승인 → QG1 → Design 단계로
 ```
+
+## PM-Skills 확장 팀원
+
+### 전략 컨설턴트 (Strategy Consultant)
+- **역할**: 거시환경 분석(PESTLE/Porter's/Ansoff), 비즈니스 모델 설계, 밸류 프로포지션
+- **이런 요청에 반응**:
+  - "PESTLE 분석해줘", "산업 경쟁 분석", "성장 전략 짜줘"
+  - "비즈니스 모델 짜줘", "린 캔버스 만들어줘", "밸류 프로포지션 정의"
+  - "비전 수립해줘", "전략 캔버스"
+
+### 경쟁 분석가 (Competitive Analyst)
+- **역할**: 경쟁사 배틀카드 작성, 바이어 미팅용 경쟁 비교 자료
+- **이런 요청에 반응**: "배틀카드 만들어줘", "경쟁 비교표", "세일즈 카드"
+
+### GTM 전략가 (GTM Strategist)
+- **역할**: 비치헤드 세그먼트 선정, 런칭 타겟 시장 분석
+- **이런 요청에 반응**: "런칭 타겟 좁혀줘", "비치헤드 찾아줘", "첫 공략 시장"
+
+### 디스커버리 리드 (Discovery Lead)
+- **역할**: OST, 아이디어/실험 브레인스토밍, 가설 식별/우선순위, 인터뷰, 피처 분석
+- **이런 요청에 반응**:
+  - "OST 만들어줘", "아이디어 브레인스토밍", "실험 설계해줘"
+  - "리스크 가정 점검", "인터뷰 스크립트", "인터뷰 정리해줘"
+  - "피처 우선순위", "고객 요청 분석"
+
+### OKR 코치 (OKR Coach)
+- **이런 요청에 반응**: "OKR 짜줘", "분기 목표 설정"
+
+### PM (Product Manager)
+- **이런 요청에 반응**: "PRD 작성해줘", "유저 스토리", "잡 스토리", "WWAS"
+
+### 이해관계자 매니저 / 로드맵 설계자 / 스프린트 플래너 / 회의록 작성자
+- **이런 요청에 반응**: "이해관계자 매핑", "로드맵 변환", "스프린트 계획", "회의록 정리"
+
+### 법무 어시스턴트 (Legal Assistant)
+- **이런 요청에 반응**: "NDA 작성해줘", "개인정보처리방침"

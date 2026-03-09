@@ -13,6 +13,9 @@ skills:
   - skills/marketing/visual-content.md
   - skills/marketing/copywriting.md
   - skills/marketing/social-viral.md
+  - skills/pm-research/customer-journey-map.md
+  - skills/pm-marketing/product-name.md
+  - skills/pm-execution/release-notes.md
 ---
 
 # 마케팅 쇼룸 (Marketing Showroom Agency)

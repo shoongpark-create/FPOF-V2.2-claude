@@ -9,6 +9,14 @@ team:
 skills:
   - skills/data/sales-analysis.md
   - skills/data/insight-archiving.md
+  - skills/pm-analytics/ab-test-analysis.md
+  - skills/pm-analytics/cohort-analysis.md
+  - skills/pm-analytics/sql-queries.md
+  - skills/pm-research/user-personas.md
+  - skills/pm-research/user-segmentation.md
+  - skills/pm-research/market-segments.md
+  - skills/pm-gtm/ideal-customer-profile.md
+  - skills/pm-execution/dummy-dataset.md
 ---
 
 # 데이터 인텔리전스 (Data Intelligence Agency)

@@ -11,6 +11,18 @@
         "matcher": "Write",
         "command": ".claude/hooks/check-output.sh \"$TOOL_INPUT\""
       }
+    ],
+    "TaskCompleted": [
+      {
+        "matcher": "",
+        "command": ".claude/hooks/team-task-completed.sh \"$TASK_DESCRIPTION\""
+      }
+    ],
+    "TeammateIdle": [
+      {
+        "matcher": "",
+        "command": ".claude/hooks/team-idle.sh"
+      }
     ]
   }
 }

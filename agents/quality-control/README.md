@@ -13,6 +13,9 @@ skills:
   - skills/quality/gap-analysis.md
   - skills/quality/completion-report.md
   - skills/quality/pdca-iteration.md
+  - skills/pm-execution/retro.md
+  - skills/pm-execution/test-scenarios.md
+  - skills/pm-toolkit/grammar-check.md
 ---
 
 # QC 본부 (Quality Control HQ)

@@ -68,6 +68,42 @@ outputs:
 - **FAIL** (≤3/6): 보완 필수
 - QG4: Match Rate ≥90% → COMPLETE / <90% → Act 단계
 
+## Pre-Mortem 사전 리스크 점검 (PM-Skills 통합)
+
+QG3(Do → Check) 직전에 실행하는 사전 리스크 분석입니다. "이번 시즌 런칭이 실패한다면, 그 이유는 무엇인가?"를 사전에 점검합니다.
+
+### Pre-Mortem 분류 체계
+
+**Tigers (진짜 호랑이)** — 실제로 프로젝트를 실패시킬 수 있는 리스크
+- Launch-blocking: 런칭 전 반드시 해결해야 하는 이슈
+- Fast-follow: 런칭 직후 빠르게 대응해야 하는 이슈
+- Track: 모니터링하며 추이를 지켜볼 이슈
+
+**Paper Tigers (종이 호랑이)** — 걱정은 되지만 실제로는 큰 문제가 아닌 것
+- 팀이 과도하게 걱정하는 항목 식별
+- 왜 실제 리스크가 아닌지 근거 제시
+
+**Elephants (코끼리)** — 모두가 알지만 아무도 말하지 않는 이슈
+- 조직적 장벽, 리소스 부족, 일정 비현실성 등
+- 명시적으로 다루고 대응 방안 논의
+
+### Pre-Mortem 실행 절차
+
+1. **리스크 식별**: 팀 관점에서 "이 시즌이 실패한다면?" 브레인스토밍
+2. **분류**: 각 리스크를 Tiger/Paper Tiger/Elephant로 분류
+3. **Tiger 긴급도 분류**: Launch-blocking / Fast-follow / Track
+4. **액션 플랜**: 각 Tiger에 대해 담당자, 기한, 완화 방안 명시
+5. **Go/No-Go 체크리스트**: Launch-blocking Tiger가 모두 해결되었는지 확인
+
+### Pre-Mortem 결과 포맷
+
+| 분류 | 리스크 | 긴급도 | 담당 | 완화 방안 | 기한 |
+|------|--------|--------|------|----------|------|
+| Tiger | [리스크] | Launch-blocking | [에이전시] | [방안] | [날짜] |
+| Tiger | [리스크] | Fast-follow | [에이전시] | [방안] | [날짜] |
+| Paper Tiger | [리스크] | - | - | [왜 문제 아닌지] | - |
+| Elephant | [리스크] | - | [에이전시] | [논의 방안] | [날짜] |
+
 ## QG 리포트 포맷
 ```markdown
 # Quality Gate [QG번호] 실행 결과
@@ -92,3 +128,9 @@ outputs:
 - [ ] 해당 QG의 모든 항목 검증
 - [ ] 판정 결과 기록
 - [ ] .fpof-state.json 업데이트
+- [ ] QG3 전: Pre-Mortem 실행 및 Launch-blocking Tiger 전수 해결 확인
+
+## 체크리스트
+- [ ] Pre-Mortem에서 Launch-blocking Tiger가 모두 해결되었는가?
+- [ ] Paper Tiger와 진짜 Tiger가 명확히 구분되었는가?
+- [ ] Elephant(모두 알지만 말 안 하는 이슈)가 식별되었는가?
