@@ -110,7 +110,10 @@ const __PER_DETAIL__ = {"WA2501TC38":{"ch":[{"c":"직영점","net":11400.0,"qty"
 let P=null, S=null, U='qty';
 const CT={BG:'가방',BP:'백팩',CA:'가디건',CB:'코트',CD:'원피스',CR:'크롭탑',DP:'패딩',EC:'이어커프',GV:'장갑',HD:'후드',HZ:'모자',JK:'재킷',JW:'주얼리',KT:'니트',LT:'롱T',MU:'머플러',OP:'오버핏팬츠',PT:'팬츠',SE:'세트',SH:'셔츠',SN:'스니커즈',SO:'양말',SR:'스카프',SS:'스커트',ST:'스웨트',TC:'잡화'};
 const CL=c=>c;
-const ACC_CATS=['BG','BP','EC','GV','HZ','JW','MU','SO','SR','TC'];
+const ACC_CATS=['BG','BP','EC','GV','HZ','JW','MU','SO','SR','TC','SN'];
+const OUTER_CATS=['CB','DP','JK'];
+const INNER_CATS=['CA','CR','HD','KT','LT','SE','SH','ST','CD'];
+const BOTTOM_CATS=['OP','PT','SS'];
 // Parse style code → year_season: WA2601xx→26SS, WA2504xx→25FW, MG2601xx→26SS
 function stSS(st){const m=(st||'').match(/^(?:WA|MG)(\d{2})(\d{2})/);if(!m)return'';return m[1]+(parseInt(m[2])<=2?'SS':'FW');}
 
@@ -637,7 +640,7 @@ function renderOverview(){
     }
   }
 
-  const fillHero=(id,list)=>{let hh='';list.slice(0,20).forEach((h,i)=>{hh+=`<tr><td>${i+1}</td><td>${CL(h.cat)}</td><td>${h.ic||'-'}</td><td>${h.g||'-'}</td><td>${fB(h.sa)}</td><td>${fmt(h.sq)}</td><td class="${rc(h.r||0)}">${pct(h.r)}</td></tr>`;});document.getElementById(id).innerHTML=hh||'<tr><td colspan="7" style="text-align:center;color:var(--text3)">데이터 없음</td></tr>';};
+  const fillHero=(id,list)=>{let hh='';const sl=list.slice(0,20);sl.forEach((h,i)=>{hh+=`<tr><td>${i+1}</td><td>${CL(h.cat)}</td><td>${h.ic||'-'}</td><td>${h.g||'-'}</td><td>${fB(h.sa)}</td><td>${fmt(h.sq)}</td><td class="${rc(h.r||0)}">${pct(h.r)}</td></tr>`;});if(sl.length){const tSA=sl.reduce((s,h)=>s+(h.sa||0),0),tSQ=sl.reduce((s,h)=>s+(h.sq||0),0);hh+=`<tr style="font-weight:800;background:var(--bg2)"><td></td><td>소계(${sl.length})</td><td></td><td></td><td>${fB(tSA)}</td><td>${fmt(tSQ)}</td><td></td></tr>`;}document.getElementById(id).innerHTML=hh||'<tr><td colspan="7" style="text-align:center;color:var(--text3)">데이터 없음</td></tr>';};
   fillHero('heroB26',heroes26);
   fillHero('heroB25',heroes25);
 }
@@ -785,6 +788,9 @@ function renderChannelBrand(brand){
     const w8=wchTY[k]?.net||0;
     ch+=`<tr><td>${k}</td><td>${fB(ct)}</td><td>${fB(cl)}</td><td>${yoy(ct,cl)}</td><td>${fB(pt)}</td><td>${fB(pl)}</td><td>${yoy(pt,pl)}</td><td>${fB(w8)}</td><td>${wow(pt,w8)}</td></tr>`;
   });
+  // 합계 행
+  {const tCT=chs.reduce((s,k)=>s+(chTY[k]?.net||0),0),tCL=chs.reduce((s,k)=>s+(chLY[k]?.net||0),0),tPT=chs.reduce((s,k)=>s+(pchTY[k]?.net||0),0),tPL=chs.reduce((s,k)=>s+(pchLY[k]?.net||0),0),tW8=chs.reduce((s,k)=>s+(wchTY[k]?.net||0),0);
+  ch+=`<tr style="font-weight:800;background:var(--bg2)"><td>합계</td><td>${fB(tCT)}</td><td>${fB(tCL)}</td><td>${yoy(tCT,tCL)}</td><td>${fB(tPT)}</td><td>${fB(tPL)}</td><td>${yoy(tPT,tPL)}</td><td>${fB(tW8)}</td><td>${wow(tPT,tW8)}</td></tr>`;}
   document.getElementById('chTbl').innerHTML=ch||'<tr><td colspan="9" style="text-align:center;color:var(--text3)">데이터 없음</td></tr>';
 
   const stores=bd.stores||[];
@@ -1206,6 +1212,9 @@ function drawProfitCharts(sid,items){
     return '<span style="color:var(--red);font-weight:600">관리필요</span>';
   }
   let ph='';ck.forEach(c=>{const d=catSet[c],ri=d.inQ?d.sQ/d.inQ*100:0,profR=d.sa?d.pa/d.sa*100:0;ph+=`<tr><td>${CL(c)}</td><td>${fB(d.sa)}</td><td>${fB(d.pa)}</td><td class="${profR>=40?'rh':profR>=20?'rm':'rl'}">${pct(profR)}</td><td class="${rc(ri)}">${pct(ri)}</td><td>${fmt(d.stQ)}</td><td style="text-align:center">${d.n}</td><td style="text-align:center">${verdict(profR,d.sa,ri)}</td></tr>`;});
+  // 합계
+  {const tSA=ck.reduce((s,c)=>s+catSet[c].sa,0),tPA=ck.reduce((s,c)=>s+catSet[c].pa,0),tInQ=ck.reduce((s,c)=>s+catSet[c].inQ,0),tSQ=ck.reduce((s,c)=>s+catSet[c].sQ,0),tStQ=ck.reduce((s,c)=>s+catSet[c].stQ,0),tN=ck.reduce((s,c)=>s+catSet[c].n,0),tRI=tInQ?tSQ/tInQ*100:0,tPR=tSA?tPA/tSA*100:0;
+  ph+=`<tr style="font-weight:800;background:var(--bg2)"><td>합계</td><td>${fB(tSA)}</td><td>${fB(tPA)}</td><td class="${tPR>=40?'rh':tPR>=20?'rm':'rl'}">${pct(tPR)}</td><td class="${rc(tRI)}">${pct(tRI)}</td><td>${fmt(tStQ)}</td><td style="text-align:center">${tN}</td><td></td></tr>`;}
   const pb=document.getElementById('profB_'+sid);if(pb)pb.innerHTML=ph||'<tr><td colspan="8" style="text-align:center;color:var(--text3)">데이터 없음</td></tr>';
 }
 
@@ -1290,7 +1299,7 @@ function renderStatus(){
       <div class="card co"><div class="lbl">기간판매</div><div class="val">${fmt(V('period_sales_qty'),isA)}</div><div class="sub">7일 ${fmt(V('period_sales_7d_qty'),isA)}</div></div>
       <div class="card cg"><div class="lbl">누적판매</div><div class="val">${fmt(V('cum_sales_qty'),isA)}</div><div class="sub">순매출 ${fB(tot.cum_sales_actual_amt)}</div></div>
       <div class="card cp"><div class="lbl">재고</div><div class="val">${fmt(V('total_stock_qty'),isA)}</div></div>
-      <div class="card cr"><div class="lbl">소진율</div><div class="val ${rc(rI)}">${rI.toFixed(1)}%</div>${cardItems&&cardItems.length?(()=>{const ri2=(arr)=>{const inQ=arr.reduce((s,i)=>s+(i.cum_in_qty||0),0),sQ=arr.reduce((s,i)=>s+(i.cum_sales_qty||0),0);return inQ?sQ/inQ*100:0;};const riUni=ri2(cardItems.filter(i=>i.gender==='UNI')),riWmn=ri2(cardItems.filter(i=>i.gender==='WOMEN')),riCloth=ri2(cardItems.filter(i=>!ACC_CATS.includes(i.category_M))),riAcc=ri2(cardItems.filter(i=>ACC_CATS.includes(i.category_M)));return`<div class="sub" style="font-size:9px;line-height:1.5;margin-top:2px">유니 <span class="${rc(riUni)}">${riUni.toFixed(1)}%</span> · 우먼스 <span class="${rc(riWmn)}">${riWmn.toFixed(1)}%</span><br>의류 <span class="${rc(riCloth)}">${riCloth.toFixed(1)}%</span> · 용품 <span class="${rc(riAcc)}">${riAcc.toFixed(1)}%</span></div>`;})():''}</div>
+      <div class="card cr"><div class="lbl">소진율</div><div class="val ${rc(rI)}">${rI.toFixed(1)}%</div>${cardItems&&cardItems.length?(()=>{const ri2=(arr)=>{const inQ=arr.reduce((s,i)=>s+(i.cum_in_qty||0),0),sQ=arr.reduce((s,i)=>s+(i.cum_sales_qty||0),0);return inQ?sQ/inQ*100:0;};const riUni=ri2(cardItems.filter(i=>i.gender==='유니섹스')),riWmn=ri2(cardItems.filter(i=>i.gender==='우먼스')),riCloth=ri2(cardItems.filter(i=>!ACC_CATS.includes(i.category_M))),riAcc=ri2(cardItems.filter(i=>ACC_CATS.includes(i.category_M))),riOuter=ri2(cardItems.filter(i=>OUTER_CATS.includes(i.category_M))),riInner=ri2(cardItems.filter(i=>INNER_CATS.includes(i.category_M))),riBottom=ri2(cardItems.filter(i=>BOTTOM_CATS.includes(i.category_M)));return`<div class="sub" style="font-size:9px;line-height:1.5;margin-top:2px">유니 <span class="${rc(riUni)}">${riUni.toFixed(1)}%</span> · 우먼스 <span class="${rc(riWmn)}">${riWmn.toFixed(1)}%</span><br>아우터 <span class="${rc(riOuter)}">${riOuter.toFixed(1)}%</span> · 이너 <span class="${rc(riInner)}">${riInner.toFixed(1)}%</span> · 바텀 <span class="${rc(riBottom)}">${riBottom.toFixed(1)}%</span><br>용품 <span class="${rc(riAcc)}">${riAcc.toFixed(1)}%</span></div>`;})():''}</div>
     </div>`;
     return h;
   };
@@ -1435,6 +1444,9 @@ function renderMonthly(){
     const share=cTN?net/cTN*100:0;
     chTableH+=`<tr><td>${i+1}</td><td>${ch}</td><td>${fB(net)}</td><td>${fB(netL)}</td><td class="${yyoy>=0?'rh':'rl'}">${yyoy>=0?'+':''}${yyoy.toFixed(1)}%</td><td>${share.toFixed(1)}%</td><td>${chDisc.toFixed(1)}%</td><td>${chDiscL.toFixed(1)}%</td><td class="${discDiff>2?'rl':discDiff<-2?'rh':''}">${discDiff>=0?'+':''}${discDiff.toFixed(1)}%p</td></tr>`;
   });
+  // 채널 합계
+  {const tNet=chKeys.reduce((s,c)=>s+((chTY[c]||{}).net||0),0),tNetL=chKeys.reduce((s,c)=>s+((chLY[c]||{}).net||0),0),tTag=chKeys.reduce((s,c)=>s+((chTY[c]||{}).tag||0),0),tTagL=chKeys.reduce((s,c)=>s+((chLY[c]||{}).tag||0),0),tYoY=yoyR(tNet,tNetL),tDisc=tTag?(1-tNet/tTag)*100:0,tDiscL=tTagL?(1-tNetL/tTagL)*100:0,tDD=tDisc-tDiscL;
+  chTableH+=`<tr style="font-weight:800;background:var(--bg2)"><td></td><td>합계</td><td>${fB(tNet)}</td><td>${fB(tNetL)}</td><td class="${tYoY>=0?'rh':'rl'}">${tYoY>=0?'+':''}${tYoY.toFixed(1)}%</td><td>100.0%</td><td>${tDisc.toFixed(1)}%</td><td>${tDiscL.toFixed(1)}%</td><td class="${tDD>2?'rl':tDD<-2?'rh':''}">${tDD>=0?'+':''}${tDD.toFixed(1)}%p</td></tr>`;}
 
   // ── 3. 성별별 매출 ──
   const gdTY=S.cum.gd_ty||{}, gdLY=S.cum.gd_ly||{};
@@ -1445,6 +1457,9 @@ function renderMonthly(){
     const share=cTN?net/cTN*100:0;
     gdTableH+=`<tr><td>${g}</td><td>${fB(net)}</td><td>${fB(netL)}</td><td class="${yoy>=0?'rh':'rl'}">${yoy>=0?'+':''}${yoy.toFixed(1)}%</td><td>${share.toFixed(1)}%</td></tr>`;
   });
+  // 성별 합계
+  {const gNet=Object.values(gdTY).reduce((s,v)=>s+(v.net||0),0),gNetL=Object.values(gdLY).reduce((s,v)=>s+(v.net||0),0),gYoY=yoyR(gNet,gNetL);
+  gdTableH+=`<tr style="font-weight:800;background:var(--bg2)"><td>합계</td><td>${fB(gNet)}</td><td>${fB(gNetL)}</td><td class="${gYoY>=0?'rh':'rl'}">${gYoY>=0?'+':''}${gYoY.toFixed(1)}%</td><td>100.0%</td></tr>`;}
 
   // ── 4. 소진율 분석 (sub-season) ──
   const mainSeasons=['26SS','25FW'];
@@ -1454,14 +1469,14 @@ function renderMonthly(){
     if(!ssItems.length) continue;
     const subs=SUB_SEASON_MAP[ss]||[];
     const ri=(arr)=>{const inQ=arr.reduce((s,i)=>s+(i.cum_in_qty||0),0),sQ=arr.reduce((s,i)=>s+(i.cum_sales_qty||0),0);return inQ?sQ/inQ*100:0;};
-    sellThruH+=`<tr class="lv-g"><td colspan="8" style="font-weight:800;background:var(--bg2)">${ss}</td></tr>`;
+    sellThruH+=`<tr class="lv-g"><td colspan="10" style="font-weight:800;background:var(--bg2)">${ss}</td></tr>`;
     for(const sub of subs){
       const si=ssItems.filter(i=>i.sub_season===sub);
       if(!si.length) continue;
       const icon=SUB_ICONS[sub]||'';
-      const all=ri(si), uni=ri(si.filter(i=>i.gender==='UNI')), wmn=ri(si.filter(i=>i.gender==='WOMEN'));
-      const cloth=ri(si.filter(i=>!ACC_CATS.includes(i.category_M))), acc=ri(si.filter(i=>ACC_CATS.includes(i.category_M)));
-      sellThruH+=`<tr><td>${icon} ${sub}</td><td>${si.length}</td><td class="${rc(all)}">${all.toFixed(1)}%</td><td class="${rc(uni)}">${uni.toFixed(1)}%</td><td class="${rc(wmn)}">${wmn.toFixed(1)}%</td><td class="${rc(cloth)}">${cloth.toFixed(1)}%</td><td class="${rc(acc)}">${acc.toFixed(1)}%</td><td>${fB(si.reduce((s,i)=>s+(i.cum_sales_actual_amt||0),0))}</td></tr>`;
+      const all=ri(si), uni=ri(si.filter(i=>i.gender==='유니섹스')), wmn=ri(si.filter(i=>i.gender==='우먼스'));
+      const outer=ri(si.filter(i=>OUTER_CATS.includes(i.category_M))), inner=ri(si.filter(i=>INNER_CATS.includes(i.category_M))), bottom=ri(si.filter(i=>BOTTOM_CATS.includes(i.category_M))), acc=ri(si.filter(i=>ACC_CATS.includes(i.category_M)));
+      sellThruH+=`<tr><td>${icon} ${sub}</td><td>${si.length}</td><td class="${rc(all)}">${all.toFixed(1)}%</td><td class="${rc(uni)}">${uni.toFixed(1)}%</td><td class="${rc(wmn)}">${wmn.toFixed(1)}%</td><td class="${rc(outer)}">${outer.toFixed(1)}%</td><td class="${rc(inner)}">${inner.toFixed(1)}%</td><td class="${rc(bottom)}">${bottom.toFixed(1)}%</td><td class="${rc(acc)}">${acc.toFixed(1)}%</td><td>${fB(si.reduce((s,i)=>s+(i.cum_sales_actual_amt||0),0))}</td></tr>`;
     }
   }
 
@@ -1501,6 +1516,9 @@ function renderMonthly(){
   const catAgg={};allItems26.forEach(i=>{const c=i.category_M||'기타';if(!catAgg[c])catAgg[c]={sa:0,sq:0,inQ:0,stQ:0,n:0};catAgg[c].sa+=(i.cum_sales_actual_amt||0);catAgg[c].sq+=(i.cum_sales_qty||0);catAgg[c].inQ+=(i.cum_in_qty||0);catAgg[c].stQ+=(i.total_stock_qty||0);catAgg[c].n++;});
   const catKeys=Object.keys(catAgg).sort((a,b)=>catAgg[b].sa-catAgg[a].sa);
   let catH='';catKeys.slice(0,15).forEach((c,i)=>{const d=catAgg[c],cri=d.inQ?d.sq/d.inQ*100:0;catH+=`<tr><td>${i+1}</td><td>${CL(c)}</td><td>${fB(d.sa)}</td><td>${fmt(d.sq)}</td><td class="${rc(cri)}">${cri.toFixed(1)}%</td><td>${fmt(d.stQ)}</td><td>${d.n}</td></tr>`;});
+  // 카테고리 합계
+  {const tSA=catKeys.reduce((s,c)=>s+catAgg[c].sa,0),tSQ=catKeys.reduce((s,c)=>s+catAgg[c].sq,0),tInQ=catKeys.reduce((s,c)=>s+catAgg[c].inQ,0),tStQ=catKeys.reduce((s,c)=>s+catAgg[c].stQ,0),tN=catKeys.reduce((s,c)=>s+catAgg[c].n,0),tRI=tInQ?tSQ/tInQ*100:0;
+  catH+=`<tr style="font-weight:800;background:var(--bg2)"><td></td><td>합계</td><td>${fB(tSA)}</td><td>${fmt(tSQ)}</td><td class="${rc(tRI)}">${tRI.toFixed(1)}%</td><td>${fmt(tStQ)}</td><td>${tN}</td></tr>`;}
 
   // ── 5대 경영목표 KPI ──
   // 목표1: 브랜드 아이덴티티 — 코어타겟(UNI) 매출 비중
@@ -1515,7 +1533,7 @@ function renderMonthly(){
   const accItems=allItems26.filter(i=>ACC_CATS.includes(i.category_M));
   const accSA=accItems.reduce((s,i)=>s+(i.cum_sales_actual_amt||0),0);
   const accShare=salesAmt?accSA/salesAmt*100:0;
-  const wmnAccItems=accItems.filter(i=>i.gender==='WOMEN');
+  const wmnAccItems=accItems.filter(i=>i.gender==='우먼스');
   const wmnAccSA=wmnAccItems.reduce((s,i)=>s+(i.cum_sales_actual_amt||0),0);
   const wmnAccShare=accSA?wmnAccSA/accSA*100:0;
   // 목표5: 글로벌 — 글로벌 채널 매출
@@ -1631,7 +1649,7 @@ function renderMonthly(){
   <div class="tw" style="margin-bottom:16px"><div class="ts"><table><thead><tr><th>성별</th><th>TY 순매출</th><th>LY 순매출</th><th>YoY</th><th>비중</th></tr></thead><tbody>${gdTableH}</tbody></table></div></div>
 
   <h3 style="font-size:15px;font-weight:800;margin:20px 0 10px;border-bottom:2px solid var(--accent);padding-bottom:4px">4. 시즌별 소진율 분석</h3>
-  <div class="tw" style="margin-bottom:16px"><div class="ts"><table><thead><tr><th>시즌</th><th>아이템수</th><th>전체</th><th>유니</th><th>우먼스</th><th>의류</th><th>용품</th><th>순매출</th></tr></thead><tbody>${sellThruH}</tbody></table></div></div>
+  <div class="tw" style="margin-bottom:16px"><div class="ts"><table><thead><tr><th>시즌</th><th>아이템수</th><th>전체</th><th>유니</th><th>우먼스</th><th>아우터</th><th>이너</th><th>바텀</th><th>용품</th><th>순매출</th></tr></thead><tbody>${sellThruH}</tbody></table></div></div>
 
   <h3 style="font-size:15px;font-weight:800;margin:20px 0 10px;border-bottom:2px solid var(--accent);padding-bottom:4px">5. 카테고리별 실적 (26SS)</h3>
   <div class="cg2" style="margin-bottom:16px">
