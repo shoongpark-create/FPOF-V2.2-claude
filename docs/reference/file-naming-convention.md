@@ -214,16 +214,20 @@ output/
     │   └── check_campaign-performance.md
     │
     ├── weekly/                              # 📅 주간 운영
-    │   ├── w09/
+    │   ├── data/                            # 📂 원본 데이터 (매주 업로드)
+    │   │   ├── sheet_product-master_w06.xlsx
+    │   │   ├── sheet_product-master_w07.xlsx
+    │   │   ├── ...
+    │   │   ├── sheet_sales-review_w06.xlsx
+    │   │   └── sheet_sales-review_w07.xlsx
+    │   ├── w09/                             # 산출물만
     │   │   ├── review_dept-summary_2026-03-04.md
     │   │   ├── review_exec-summary_2026-03-04.md
     │   │   ├── review_full-raw_2026-03-05.md
     │   │   ├── deck_exec-report_2026-03-04.pptx
     │   │   ├── report_exec_2026-03-04.pdf
     │   │   ├── board_dashboard_2026-03-04.html
-    │   │   ├── meeting_imc-sync_2026-03-05.md
-    │   │   ├── sheet_product-master_w09.xlsx
-    │   │   └── sheet_sales-review_w09.xlsx
+    │   │   └── meeting_imc-sync_2026-03-05.md
     │   └── w10/
     │       ├── review_exec-summary_2026-03-11.md
     │       └── board_dashboard_w10.html
@@ -301,7 +305,14 @@ check_  opening-analysis.md      ← 오프닝 분석
         foot-traffic.md          ← 방문객 분석
 ```
 
-#### 주간 운영 (`weekly/wNN/`)
+#### 주간 데이터 (`weekly/data/`)
+```
+sheet_  product-master_wNN.xlsx  ← 프로덕트 마스터 (매주 업로드)
+        sales-review_wNN.xlsx    ← 매출 리뷰 (매주 업로드)
+```
+> `weekly/data/`의 원본 데이터가 업데이트되면 `dashboard/`의 시각화·JSON이 갱신됩니다.
+
+#### 주간 산출물 (`weekly/wNN/`)
 ```
 review_ exec-summary_*.md        ← 임원 요약
         dept-summary_*.md        ← 사업부 요약
@@ -314,9 +325,6 @@ report_ exec_*.pdf               ← PDF 보고서
 board_  dashboard_*.html         ← 대시보드
 
 meeting_[topic]_*.md             ← 회의록
-
-sheet_  product-master_wNN.xlsx  ← 프로덕트 마스터
-        sales-review_wNN.xlsx    ← 매출 리뷰
 ```
 
 ### 3-5. 폴더 운영 규칙
@@ -326,10 +334,12 @@ sheet_  product-master_wNN.xlsx  ← 프로덕트 마스터
 | 1 | **프로젝트 = 폴더** | 새 프로젝트가 시작되면 해당 시즌 아래 폴더 생성 |
 | 2 | **한 프로젝트 안에 모든 포맷** | md·pptx·xlsx·pdf·html 같은 폴더에 공존 |
 | 3 | **PDCA가 파일명에** | 폴더 안에서 `plan_` → `design_` → `do_` → `check_` 순으로 자연 정렬 |
-| 4 | **주간 회의록은 `weekly/`에** | 프로젝트 회의가 아닌 정기 회의록은 해당 주차 폴더에 저장 |
-| 5 | **대시보드 데이터는 `dashboard/`에** | 시각화·JSON 데이터는 시즌 공용 폴더에 |
-| 6 | **`_archive/`에 구버전 보관** | 대체된 파일은 삭제하지 않고 아카이브 |
-| 7 | **시즌 전환 시 새 폴더** | `26FW/` 생성, 구조 동일하게 반복 |
+| 4 | **주간 회의록은 `weekly/wNN/`에** | 프로젝트 회의가 아닌 정기 회의록은 해당 주차 폴더에 저장 |
+| 5 | **원본 데이터는 `weekly/data/`에** | 매주 업로드하는 엑셀 원본은 data/ 폴더에 누적 관리 |
+| 6 | **`data/` → `dashboard/` 흐름** | data/의 원본 데이터가 갱신되면 dashboard/의 시각화·JSON이 업데이트 |
+| 7 | **`wNN/`에는 산출물만** | 데이터 파일 없이 리뷰·회의록·대시보드·발표자료만 저장 |
+| 8 | **`_archive/`에 구버전 보관** | 대체된 파일은 삭제하지 않고 아카이브 |
+| 9 | **시즌 전환 시 새 폴더** | `26FW/` 생성, 구조 동일하게 반복 |
 
 ---
 

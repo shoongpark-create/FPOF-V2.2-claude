@@ -70,16 +70,82 @@ def parse_season_from_style(style_code):
 # ═══════════════════════════════════════════
 # PART 1: Product Master 추출
 # ═══════════════════════════════════════════
-def extract_product_master(master_file):
-    """Weekly_Product_Master_W*.xlsx → product items + filters + ins"""
-    print(f"  [Product Master] {master_file}")
-    wb = openpyxl.load_workbook(master_file, read_only=True, data_only=True)
-    ws = wb["weekly_TY"]
+def build_spec_lookup(master_dir):
+    """모든 Product Master 파일에서 item_code → specific_1~5 사전 구축.
+    의류 아이템만 해당 (용품 카테고리는 속성 없음)."""
+    spec = {}
+    for f in sorted(Path(master_dir).glob("Weekly_Product_Master_W*.xlsx")):
+        if "~$" in f.name:
+            continue
+        wb = openpyxl.load_workbook(f, data_only=True)
+        ws = wb["weekly_TY"]
+        headers = [str(c.value).strip() if c.value else "" for c in next(ws.iter_rows(min_row=1, max_row=1))]
+        col = {h: i for i, h in enumerate(headers) if h}
+        sp_cols = [col.get(f"specific_{j}") for j in range(1, 6)]
+        ic_col = col.get("basic_item_code", 14)
+        for row in ws.iter_rows(min_row=2, values_only=True):
+            if not row or len(row) < 15:
+                continue
+            item = str(row[ic_col] or "")
+            if not item.startswith("WA") or item in spec:
+                continue
+            vals = [row[c] if c is not None else None for c in sp_cols]
+            has_any = any(v is not None and str(v).strip() and str(v).strip() != "0" for v in vals)
+            if has_any:
+                spec[item] = {
+                    f"sp{j+1}": (str(vals[j]).strip() if vals[j] and str(vals[j]).strip() != "0" else "")
+                    for j in range(5)
+                }
+        wb.close()
+    print(f"  [Spec Lookup] {len(spec)}개 아이템 속성 사전 구축")
+    return spec
 
-    rows = list(ws.iter_rows(values_only=True))
-    headers = [str(h).strip() if h else "" for h in rows[0]]
-    col = {h: i for i, h in enumerate(headers) if h}
-    wb.close()
+
+def extract_product_master(master_file, master_dir=None):
+    """Weekly_Product_Master_W*.xlsx → product items + filters + ins
+    master_dir 지정 시 모든 주차 파일을 스캔하여 누락 시즌 보완 + 속성 사전 구축"""
+    print(f"  [Product Master] {master_file}")
+
+    # 속성 사전 (모든 주차 파일에서)
+    spec_lookup = build_spec_lookup(master_dir) if master_dir else {}
+
+    # 여러 파일에서 데이터 수집 (최신 파일 우선, 누락 시즌 보완)
+    all_rows = []
+    col = None
+    master_files = sorted(Path(master_dir).glob("Weekly_Product_Master_W*.xlsx"), reverse=True) if master_dir else [master_file]
+    seen_seasons = set()
+    for mf in master_files:
+        if "~$" in mf.name:
+            continue
+        wb = openpyxl.load_workbook(mf, read_only=True, data_only=True)
+        ws = wb["weekly_TY"]
+        rows = list(ws.iter_rows(values_only=True))
+        headers = [str(h).strip() if h else "" for h in rows[0]]
+        if col is None:
+            col = {h: i for i, h in enumerate(headers) if h}
+        # 이 파일에 있는 시즌 확인
+        file_seasons = set()
+        wa_rows = []
+        for row in rows[1:]:
+            if not row or len(row) < 15:
+                continue
+            item = str(row[col.get("basic_item_code", 14)] or "")
+            bs = str(row[col.get("basic_season", 12)] or "")
+            if item.startswith("WA") and bs:
+                file_seasons.add(bs)
+                wa_rows.append(row)
+        # 아직 수집 안 된 시즌의 행만 추가
+        new_seasons = file_seasons - seen_seasons
+        if new_seasons:
+            for row in wa_rows:
+                bs = str(row[col.get("basic_season", 12)] or "")
+                if bs in new_seasons:
+                    all_rows.append(row)
+            seen_seasons |= new_seasons
+            print(f"    ← {mf.name}: 시즌 {sorted(new_seasons)} 추가 ({len(wa_rows)}행 중 {sum(1 for r in wa_rows if str(r[col.get('basic_season',12)] or '') in new_seasons)}행)")
+        wb.close()
+
+    print(f"  총 {len(all_rows)}행, 시즌: {sorted(seen_seasons)}")
 
     # 필요한 컬럼 인덱스 찾기
     needed_fields = [
@@ -115,7 +181,7 @@ def extract_product_master(master_file):
     })
     item_meta = {}
 
-    for row in rows[1:]:
+    for row in all_rows:
         if not row or len(row) < 15:
             continue
         # basic_season 으로 시즌 판별
@@ -140,6 +206,7 @@ def extract_product_master(master_file):
 
         # 메타데이터 (첫 만남에만)
         if key not in item_meta:
+            sp = spec_lookup.get(item_code, {})
             item_meta[key] = {
                 "year_season": year_season,
                 "gender": gender,
@@ -148,6 +215,11 @@ def extract_product_master(master_file):
                 "category_L": cat_l,
                 "category_M": cat_m,
                 "item_code": item_code,
+                "sp1": sp.get("sp1", ""),
+                "sp2": sp.get("sp2", ""),
+                "sp3": sp.get("sp3", ""),
+                "sp4": sp.get("sp4", ""),
+                "sp5": sp.get("sp5", ""),
             }
 
         # 수량/금액 집계
@@ -177,8 +249,12 @@ def extract_product_master(master_file):
             if src in col:
                 d[dst] += safe_float(row[col[src]])
 
-    # 최종 items 리스트 구성
+    # 최종 items 리스트 구성 (경량화: 정수 반올림 + 미사용 필드 제거)
     items = []
+    drop_fields = {"order_amt", "period_in_amt", "cum_in_amt", "cum_out_amt",
+                    "period_sales_amt", "period_sales_7d_amt", "cum_sales_amt",
+                    "total_stock_amt", "profit_post_amt", "period_sales_7d_actual_amt",
+                    "category_L"}
     for key, d in items_agg.items():
         meta = item_meta[key]
         item = {**d, **meta}
@@ -188,10 +264,23 @@ def extract_product_master(master_file):
         out_q = item["cum_out_qty"]
         sa = item["cum_sales_actual_amt"]
         pa = item["profit_pre_amt"]
-        item["ri_q"] = (s_q / in_q * 100) if in_q else 0
-        item["ri_a"] = (item["cum_sales_price_tag_amt"] / item["cum_in_price_tag_amt"] * 100) if item["cum_in_price_tag_amt"] else 0
-        item["ro_q"] = (s_q / out_q * 100) if out_q else 0
-        item["pr"] = (pa / sa * 100) if sa else 0
+        item["ri_q"] = round((s_q / in_q * 100), 1) if in_q else 0
+        item["ri_a"] = round((item["cum_sales_price_tag_amt"] / item["cum_in_price_tag_amt"] * 100), 1) if item["cum_in_price_tag_amt"] else 0
+        item["ro_q"] = round((s_q / out_q * 100), 1) if out_q else 0
+        item["pr"] = round((pa / sa * 100), 1) if sa else 0
+        # 금액/수량 정수화
+        for k in list(item.keys()):
+            if k in drop_fields:
+                del item[k]
+            elif isinstance(item[k], float):
+                if k in ("ri_q", "ri_a", "ro_q", "pr"):
+                    pass  # 이미 round 처리
+                else:
+                    item[k] = int(item[k])
+        # 빈 spec 필드 제거
+        for sp in ["sp1", "sp2", "sp3", "sp4", "sp5"]:
+            if not item.get(sp):
+                item.pop(sp, None)
         items.append(item)
 
     # 필터 옵션
@@ -305,7 +394,7 @@ def extract_sales_sheet(wb, sheet_name, brand_filter=BRAND_FILTER):
 
 
 def agg_by_key(data, key_fn, filter_fn=None):
-    """데이터를 key 기준으로 집계"""
+    """데이터를 key 기준으로 집계 (정수 반올림)"""
     result = defaultdict(lambda: {"qty": 0, "net": 0, "tag": 0, "cost": 0})
     for d in data:
         if filter_fn and not filter_fn(d):
@@ -317,6 +406,12 @@ def agg_by_key(data, key_fn, filter_fn=None):
         result[k]["net"] += d["net"]
         result[k]["tag"] += d["tag"]
         result[k]["cost"] += d["cost"]
+    # 정수 반올림 (JSON 크기 절감)
+    for v in result.values():
+        v["qty"] = int(v["qty"])
+        v["net"] = int(v["net"])
+        v["tag"] = int(v["tag"])
+        v["cost"] = int(v["cost"])
     return dict(result)
 
 
@@ -400,12 +495,16 @@ def extract_sales_data(sales_dir, weeks, latest_week):
         store_style_agg[k][sk]["it"] = d["item"]
         store_style_agg[k][sk]["net"] += d["net"]
         store_style_agg[k][sk]["qty"] += d["qty"]
+    # 정수 반올림
+    for v in store_agg.values():
+        v["net"] = int(v["net"]); v["qty"] = int(v["qty"])
     stores = sorted(store_agg.values(), key=lambda x: x["net"], reverse=True)[:30]
-    # attach top 20 styles to each store
     store_styles_cum = {}
     for st in stores:
         sc = st["s"]
-        top = sorted(store_style_agg[sc].values(), key=lambda x: x["net"], reverse=True)[:20]
+        for sv in store_style_agg[sc].values():
+            sv["net"] = int(sv["net"]); sv["qty"] = int(sv["qty"])
+        top = sorted(store_style_agg[sc].values(), key=lambda x: x["net"], reverse=True)[:15]
         store_styles_cum[sc] = top
 
     pstore_agg = defaultdict(lambda: {"s": "", "n": "", "c": "", "net": 0, "qty": 0})
@@ -423,11 +522,15 @@ def extract_sales_data(sales_dir, weeks, latest_week):
         pstore_style_agg[k][sk]["it"] = d["item"]
         pstore_style_agg[k][sk]["net"] += d["net"]
         pstore_style_agg[k][sk]["qty"] += d["qty"]
+    for v in pstore_agg.values():
+        v["net"] = int(v["net"]); v["qty"] = int(v["qty"])
     per_stores = sorted(pstore_agg.values(), key=lambda x: x["net"], reverse=True)[:30]
     store_styles_per = {}
     for st in per_stores:
         sc = st["s"]
-        top = sorted(pstore_style_agg[sc].values(), key=lambda x: x["net"], reverse=True)[:20]
+        for sv in pstore_style_agg[sc].values():
+            sv["net"] = int(sv["net"]); sv["qty"] = int(sv["qty"])
+        top = sorted(pstore_style_agg[sc].values(), key=lambda x: x["net"], reverse=True)[:15]
         store_styles_per[sc] = top
 
     sales["stores"] = stores
@@ -446,6 +549,8 @@ def extract_sales_data(sales_dir, weeks, latest_week):
         style_agg[k]["net"] += d["net"]
         style_agg[k]["qty"] += d["qty"]
         style_agg[k]["tag"] += d["tag"]
+    for v in style_agg.values():
+        v["net"] = int(v["net"]); v["qty"] = int(v["qty"]); v["tag"] = int(v["tag"])
     styles = sorted(style_agg.values(), key=lambda x: x["net"], reverse=True)[:50]
     sales["styles"] = styles
 
@@ -460,6 +565,8 @@ def extract_sales_data(sales_dir, weeks, latest_week):
         pstyle_agg[k]["net"] += d["net"]
         pstyle_agg[k]["qty"] += d["qty"]
         pstyle_agg[k]["tag"] += d["tag"]
+    for v in pstyle_agg.values():
+        v["net"] = int(v["net"]); v["qty"] = int(v["qty"]); v["tag"] = int(v["tag"])
     per_styles = sorted(pstyle_agg.values(), key=lambda x: x["net"], reverse=True)[:50]
 
     # ── 주차별 합계 (wt) ──
@@ -480,10 +587,10 @@ def extract_sales_data(sales_dir, weeks, latest_week):
 
         def total(data):
             return {
-                "qty": sum(d["qty"] for d in data),
-                "net": sum(d["net"] for d in data),
-                "tag": sum(d["tag"] for d in data),
-                "cost": sum(d["cost"] for d in data),
+                "qty": int(sum(d["qty"] for d in data)),
+                "net": int(sum(d["net"] for d in data)),
+                "tag": int(sum(d["tag"] for d in data)),
+                "cost": int(sum(d["cost"] for d in data)),
             }
 
         wt[f"W{w}_cT"] = total(w_cum_ty)
@@ -498,18 +605,20 @@ def extract_sales_data(sales_dir, weeks, latest_week):
     sales["wt"] = wt
 
     # ── 스타일 상세 (채널/매장 드릴다운) ──
-    # 모든 판매 스타일에 대해 상세 데이터 생성 (서브시즌 Top 20 누락 방지)
+    # Top 100 스타일만 상세 데이터 생성 (크기 절감)
+    top_styles_set = set(s["st"] for s in styles[:100])
+    top_pstyles_set = set(s["st"] for s in per_styles[:100])
+    all_detail_styles = top_styles_set | top_pstyles_set
+
     cum_detail = {}
     per_detail = {}
 
-    # 누적: 스타일별 채널/매장 집계를 한 번에 처리
     cum_by_style = defaultdict(list)
     for d in cum_ty:
-        cum_by_style[d["style"]].append(d)
+        if d["style"] in all_detail_styles:
+            cum_by_style[d["style"]].append(d)
 
     for st, st_data in cum_by_style.items():
-        if not st:
-            continue
         ch_agg = defaultdict(lambda: {"c": "", "net": 0, "qty": 0})
         store_agg2 = defaultdict(lambda: {"s": "", "n": "", "c": "", "net": 0, "qty": 0})
         for d in st_data:
@@ -521,19 +630,21 @@ def extract_sales_data(sales_dir, weeks, latest_week):
             store_agg2[d["store_code"]]["c"] = d["channel"]
             store_agg2[d["store_code"]]["net"] += d["net"]
             store_agg2[d["store_code"]]["qty"] += d["qty"]
+        for v in ch_agg.values():
+            v["net"] = int(v["net"]); v["qty"] = int(v["qty"])
+        for v in store_agg2.values():
+            v["net"] = int(v["net"]); v["qty"] = int(v["qty"])
         cum_detail[st] = {
             "ch": sorted(ch_agg.values(), key=lambda x: x["net"], reverse=True),
-            "top": sorted(store_agg2.values(), key=lambda x: x["net"], reverse=True)[:10],
+            "top": sorted(store_agg2.values(), key=lambda x: x["net"], reverse=True)[:8],
         }
 
-    # 주간: 스타일별 채널/매장 집계
     per_by_style = defaultdict(list)
     for d in per_ty:
-        per_by_style[d["style"]].append(d)
+        if d["style"] in all_detail_styles:
+            per_by_style[d["style"]].append(d)
 
     for st, st_pdata in per_by_style.items():
-        if not st:
-            continue
         pch_agg = defaultdict(lambda: {"c": "", "net": 0, "qty": 0})
         pstore_agg2 = defaultdict(lambda: {"s": "", "n": "", "c": "", "net": 0, "qty": 0})
         for d in st_pdata:
@@ -545,9 +656,13 @@ def extract_sales_data(sales_dir, weeks, latest_week):
             pstore_agg2[d["store_code"]]["c"] = d["channel"]
             pstore_agg2[d["store_code"]]["net"] += d["net"]
             pstore_agg2[d["store_code"]]["qty"] += d["qty"]
+        for v in pch_agg.values():
+            v["net"] = int(v["net"]); v["qty"] = int(v["qty"])
+        for v in pstore_agg2.values():
+            v["net"] = int(v["net"]); v["qty"] = int(v["qty"])
         per_detail[st] = {
             "ch": sorted(pch_agg.values(), key=lambda x: x["net"], reverse=True),
-            "top": sorted(pstore_agg2.values(), key=lambda x: x["net"], reverse=True)[:10],
+            "top": sorted(pstore_agg2.values(), key=lambda x: x["net"], reverse=True)[:8],
         }
 
     # ── 멀티 브랜드 채널 데이터 (와키윌리/커버낫/리) ──
@@ -625,11 +740,15 @@ def extract_sales_data(sales_dir, weeks, latest_week):
             b_store_style[k][sk]["it"] = d["item"]
             b_store_style[k][sk]["net"] += d["net"]
             b_store_style[k][sk]["qty"] += d["qty"]
-        b_stores = sorted(b_store_agg.values(), key=lambda x: x["net"], reverse=True)[:30]
+        for v in b_store_agg.values():
+            v["net"] = int(v["net"]); v["qty"] = int(v["qty"])
+        b_stores = sorted(b_store_agg.values(), key=lambda x: x["net"], reverse=True)[:20]
         b_ssc = {}
         for st in b_stores:
             sc = st["s"]
-            b_ssc[sc] = sorted(b_store_style[sc].values(), key=lambda x: x["net"], reverse=True)[:20]
+            for sv in b_store_style[sc].values():
+                sv["net"] = int(sv["net"]); sv["qty"] = int(sv["qty"])
+            b_ssc[sc] = sorted(b_store_style[sc].values(), key=lambda x: x["net"], reverse=True)[:10]
         b_ch["stores"] = b_stores
         b_ch["store_styles_cum"] = b_ssc
 
@@ -649,11 +768,15 @@ def extract_sales_data(sales_dir, weeks, latest_week):
             b_pstore_style[k][sk]["it"] = d["item"]
             b_pstore_style[k][sk]["net"] += d["net"]
             b_pstore_style[k][sk]["qty"] += d["qty"]
-        b_pstores = sorted(b_pstore_agg.values(), key=lambda x: x["net"], reverse=True)[:30]
+        for v in b_pstore_agg.values():
+            v["net"] = int(v["net"]); v["qty"] = int(v["qty"])
+        b_pstores = sorted(b_pstore_agg.values(), key=lambda x: x["net"], reverse=True)[:20]
         b_ssp = {}
         for st in b_pstores:
             sc = st["s"]
-            b_ssp[sc] = sorted(b_pstore_style[sc].values(), key=lambda x: x["net"], reverse=True)[:20]
+            for sv in b_pstore_style[sc].values():
+                sv["net"] = int(sv["net"]); sv["qty"] = int(sv["qty"])
+            b_ssp[sc] = sorted(b_pstore_style[sc].values(), key=lambda x: x["net"], reverse=True)[:10]
         b_ch["per_stores"] = b_pstores
         b_ch["store_styles_per"] = b_ssp
 
@@ -802,7 +925,7 @@ def main():
             print("ERROR: Product Master 파일을 찾을 수 없습니다.")
             sys.exit(1)
 
-    prod_data = extract_product_master(master_file)
+    prod_data = extract_product_master(master_file, master_dir=master_dir)
     print(f"  → {len(prod_data['items'])} items, {len(prod_data['ins'])} seasons")
 
     # 2. Sales 추출

@@ -309,8 +309,9 @@ Claude 전용 훅/슬래시 명령은 유지하되, Codex에서는 아래 스크
 | 캠페인 | `campaign-[name]/` | `campaign-ss-launch/` |
 | 리테일 | `retail-[name]/` | `retail-seongsu-flagship/` |
 | 콜라보 | `collab-[partner]/` | `collab-sanrio/` |
-| 주간 운영 | `weekly/wNN/` | `weekly/w09/` (리뷰·회의·시트) |
-| 대시보드 | `dashboard/` | JSON 데이터·HTML 시각화 |
+| 주간 데이터 | `weekly/data/` | 매주 업로드하는 원본 엑셀 (→ dashboard 갱신) |
+| 주간 산출물 | `weekly/wNN/` | `weekly/w09/` (리뷰·회의·대시보드) |
+| 대시보드 | `dashboard/` | `weekly/data/` 기반 시각화·JSON |
 
 ### 파일명 규칙
 ```
@@ -342,13 +343,15 @@ output/26SS/
 │   ├── do_souvenir-zone-annual-plan.md
 │   └── check_opening-analysis.md
 ├── weekly/                          ← 주간 운영
-│   └── w09/
+│   ├── data/                        ← 원본 데이터 (매주 업로드)
+│   │   ├── sheet_product-master_w09.xlsx
+│   │   └── sheet_sales-review_w09.xlsx
+│   └── w09/                         ← 산출물만
 │       ├── review_exec-summary_2026-03-04.md
 │       ├── deck_exec-report_2026-03-04.pptx
-│       ├── meeting_imc-sync_2026-03-05.md
-│       └── sheet_product-master_w09.xlsx
-└── dashboard/                       ← 대시보드
-    ├── data_sales.json
+│       └── meeting_imc-sync_2026-03-05.md
+└── dashboard/                       ← data/ 기반 대시보드
+    ├── data_sales.json              ← weekly/data/ 가공 결과
     └── board_sales.html
 ```
 
