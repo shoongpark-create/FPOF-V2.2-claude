@@ -425,10 +425,12 @@ workspace/26SS/
 - `task-agents/format-converter/README.md` — 온디맨드 문서 변환 에이전트
 - `reference/file-naming-convention.md` — 파일 네이밍 & 폴더링 컨벤션
 - `reference/fpof-architecture.md` — 전체 시스템 아키텍처
-- `reference/brand-strategy.md` — 브랜드 전략 원문
-- `reference/ip-bible.md` — IP 캐릭터 세계관 원문
-- `reference/core-target.md` — 코어 타겟 정의 원문
-- `reference/business-goals.md` — 5대 경영목표 원문
+- `reference/bcave/bcave-ax-executive-summary.md` — 비케이브 AX 전략 경영진 요약 보고서
+- `reference/wacky willy operation plan/brand-strategy.md` — 브랜드 전략 원문
+- `reference/wacky willy operation plan/ip-bible.md` — IP 캐릭터 세계관 원문
+- `reference/wacky willy operation plan/core-target.md` — 코어 타겟 정의 원문
+- `reference/wacky willy operation plan/business-goals.md` — 5대 경영목표 원문
+- `reference/wacky willy operation plan/wacky-willy-operation-strategy.md` — 와키윌리 운영 전략 (통합본)
 - `generated/` — 빌드 스크립트로 생성된 문서 (PDF, PPTX, HTML 등)
 - `external/` — 외부 참고 자료 (AI 방법론 등)
 
