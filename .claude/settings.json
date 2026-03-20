@@ -3,7 +3,13 @@
     "playwright": {
       "type": "stdio",
       "command": "npx",
-      "args": ["-y", "@playwright/mcp@latest"]
+      "args": [
+        "-y",
+        "@playwright/mcp@latest"
+      ]
     }
+  },
+  "enabledPlugins": {
+    "telegram@claude-plugins-official": true
   }
 }
