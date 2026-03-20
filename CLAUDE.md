@@ -78,7 +78,7 @@
 | 에이전시 | 팀원 (역할 → 스킬) |
 |----------|-------------------|
 | **전략기획실** | 시장 리서처 → `trend-research` · 브랜드 전략가 → `brand-strategy` · 수석 MD → `md-planning` · 컬렉션 플래너 → `line-sheet` · 전략 컨설턴트 → `pestle-analysis` · `porters-five-forces` · `ansoff-matrix` · `business-model-canvas` · `lean-canvas` · `value-proposition` · `product-strategy-canvas` · `product-vision` · 경쟁 분석가 → `competitive-battlecard` · GTM 전략가 → `beachhead-segment` · 디스커버리 리드 → `opportunity-solution-tree` · `brainstorm-ideas-*` · `brainstorm-experiments-*` · `identify-assumptions-*` · `prioritize-*` · `analyze-feature-requests` · PM → `create-prd` · `user-stories` · `job-stories` · OKR 코치 → `brainstorm-okrs` · 이해관계자 매니저 → `stakeholder-map` · 로드맵 설계자 → `outcome-roadmap` · 법무 어시스턴트 → `draft-nda` · `privacy-policy` |
-| **크리에이티브 스튜디오** | 크리에이티브 디렉터 → `moodboard` · 패션 디자이너 → `design-spec` · 아트 디렉터 → `visual-generation` |
+| **크리에이티브 스튜디오** | 크리에이티브 디렉터 → `moodboard` · `pinterest-crawl` · 패션 디자이너 → `design-spec` · 아트 디렉터 → `visual-generation` |
 | **프로덕트 랩** | 프로덕션 매니저 → `techpack` · `costing-ve` · `qr-process` |
 | **마케팅 쇼룸** | 마케팅 디렉터 → `imc-strategy` · 콘텐츠 디렉터 → `visual-content` · 패션 에디터 → `copywriting` · 소셜 전략 디렉터 → `social-viral` · CX 디자이너 → `customer-journey-map` · 브랜드 네이밍 전문가 → `product-name` · 릴리즈 매니저 → `release-notes` |
 | **데이터 인텔리전스** | 트렌드 애널리스트 → `sales-analysis` · 인사이트 아키텍트 → `insight-archiving` · 데이터 애널리스트 → `ab-test-analysis` · `cohort-analysis` · `sql-queries` · 리서치 애널리스트 → `user-personas` · `user-segmentation` · `market-segments` · 고객 분석가 → `ideal-customer-profile` · 데이터 엔지니어 → `dummy-dataset` |
@@ -140,6 +140,7 @@
 | 이렇게 말하면 | 이 스킬이 작동 |
 |-------------|-------------|
 | "무드보드 만들어줘", "이번 시즌 비주얼 톤은?" | `moodboard` |
+| "핀터레스트에서 이미지 수집해줘", "레퍼런스 모아줘", "키워드 이미지 검색해줘" | `pinterest-crawl` |
 | "디자인 구체적으로 잡아줘", "이 아이템 스펙 정리" | `design-spec` |
 | "이미지 만들어줘", "비주얼 에셋 뽑아줘" | `visual-generation` |
 
@@ -250,6 +251,7 @@
 | `/pdf [유형]` | PDF 보고서 생성 | `/pdf season-book`, `/pdf techpack` |
 | `/sheet [유형]` | 엑셀(XLSX) 시트 생성 | `/sheet line-sheet`, `/sheet otb` |
 | `/doc [유형]` | 워드(DOCX) 문서 생성 | `/doc campaign-plan`, `/doc press-release` |
+| `/pinterest [키워드]` | 핀터레스트 이미지 수집·키워드별 폴더 분류 | `/pinterest dopamine dressing`, `/pinterest 텐션업코디 50` |
 | `/market-scan` | 거시환경 종합 분석 (SWOT+PESTLE+Porter's+Ansoff) | "외부 환경 스캔해줘" |
 | `/pricing` | 가격 전략 설계 | "가격 포지셔닝 잡아줘" |
 | `/business-model` | 비즈니스 모델 캔버스 탐색 | "비즈니스 모델 짜줘" |
