@@ -71,14 +71,28 @@
     "new-basic-sweat": {
       "type": "item",
       "pdca_phase": "plan",
-      "description": "뉴 베이직 스웻 라인업 재설계 — UNI(Soft Unisex) + WOMEN'S(Wacky Feminine) 이원화",
+      "description": "뉴 베이직 스웻 라인업 (TRUSTED BASIC 원안) — TRUSTED COMFORT 전환 전 원본 리서치",
       "artifacts": [
         "workspace/26SS/new-basic-sweat/plan_trend-research.md",
         "workspace/26SS/new-basic-sweat/plan_competitor-benchmark.md",
         "workspace/26SS/new-basic-sweat/plan_category-brief.md",
         "workspace/26SS/new-basic-sweat/plan_launch-strategy.md"
       ],
-      "notes": "2026-03-17: 통합 런칭 전략서 완성 — MVP 8STY(맨투맨+후드티×UNI/W×2색) → Phase1 20STY(셋업+집업+3rd컬러) → Phase2 30+STY(A/B+악센트+한정가공). UNI=KIKY/젠더뉴트럴큐트, W=LILLY/페미닌전용설계"
+      "notes": "2026-03-17: TRUSTED BASIC 런칭 전략서 완성. 2026-03-21: TRUSTED COMFORT로 전환 — 원본 리서치는 여기 유지, 전환 문서는 trusted-comfort/ 폴더로 이동"
+    },
+    "trusted-comfort": {
+      "type": "item",
+      "pdca_phase": "plan",
+      "description": "TRUSTED COMFORT — 기능성 캐주얼 웰니스 라인업. 가볍고 따뜻한 소프트 기능성 소재(200-280g) × UNI/W 이원화 × IP 감성. 기존 TRUSTED BASIC에서 전환",
+      "artifacts": [
+        "workspace/26SS/trusted-comfort/plan_trusted-comfort-pivot.md",
+        "workspace/26SS/trusted-comfort/plan_trusted-comfort-executive-brief.md",
+        "workspace/26SS/trusted-comfort/plan_wellness-functional-material-benchmark.md",
+        "workspace/26SS/trusted-comfort/plan_wellness-value-proposition.md",
+        "workspace/26SS/trusted-comfort/plan_wellness-competitive-battlecard.md",
+        "workspace/26SS/trusted-comfort/deck_trusted-comfort-strategy.html"
+      ],
+      "notes": "2026-03-21: TRUSTED COMFORT 프로젝트 분리. 소재 벤치마크(10개 브랜드)·밸류프로포지션(JTBD)·경쟁배틀카드(10개 브랜드)·전환전략서·대표보고용요약서·HTML프레젠테이션(18슬라이드) 완성. MVP 12STY(맨투맨+후드티×UNI/W×3색), 26FW 7월 런칭 목표"
     }
   },
   "operational": {
@@ -135,18 +149,20 @@
         "workspace/26SS/season-strategy/plan_strategy-summary.pptx",
         "workspace/26SS/season-strategy/plan_market-intel-weekly_2026-03-10.md",
         "workspace/26SS/season-strategy/design_consumer-insight-brief.md",
-        "workspace/26SS/season-strategy/plan_hat-category-rebuild-research.md",
-        "workspace/26SS/season-strategy/plan_hat-category-rebuild.md",
-        "workspace/26SS/season-strategy/plan_wellness-market-research.md",
-        "workspace/26SS/season-strategy/plan_wellness-target-deep-dive.md",
-        "workspace/26SS/season-strategy/plan_wellness-influencer-analysis.md",
-        "workspace/26SS/season-strategy/plan_wellness-entry-strategy.md",
-        "workspace/26SS/season-strategy/plan_wellness-entry-strategy_v2.md",
-        "workspace/26SS/season-strategy/plan_wellness-seasonal-capsule.md",
-        "workspace/26SS/season-strategy/plan_wellness-travel-kit.md",
-        "workspace/26SS/season-strategy/plan_wellness-sauna-day.md",
-        "workspace/26SS/season-strategy/plan_wellness-local-collab.md",
-        "workspace/26SS/season-strategy/plan_wellness-influencer-collab-strategy.md"
+        "workspace/26SS/season-strategy/hat-category/plan_hat-category-rebuild-research.md",
+        "workspace/26SS/season-strategy/hat-category/plan_hat-category-rebuild.md",
+        "workspace/26SS/season-strategy/wellness-research/plan_wellness-market-research.md",
+        "workspace/26SS/season-strategy/wellness-research/plan_wellness-target-deep-dive.md",
+        "workspace/26SS/season-strategy/wellness-research/plan_wellness-influencer-analysis.md",
+        "workspace/26SS/season-strategy/wellness-research/plan_wellness-entry-strategy.md",
+        "workspace/26SS/season-strategy/wellness-research/plan_wellness-entry-strategy_v2.md",
+        "workspace/26SS/season-strategy/wellness-capsule/plan_wellness-seasonal-capsule.md",
+        "workspace/26SS/season-strategy/wellness-capsule/plan_wellness-travel-kit.md",
+        "workspace/26SS/season-strategy/wellness-capsule/plan_wellness-sauna-day.md",
+        "workspace/26SS/season-strategy/wellness-capsule/plan_wellness-local-collab.md",
+        "workspace/26SS/season-strategy/wellness-capsule/plan_wellness-influencer-collab-strategy.md",
+        "workspace/26SS/season-strategy/retail/plan_big4-retail-proposal.html",
+        "workspace/26SS/season-strategy/retail/plan_big4-retailers-mindmap.html"
       ]
     }
   },
