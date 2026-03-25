@@ -203,6 +203,20 @@
 | "개인정보처리방침 만들어줘" | `privacy-policy` |
 | "이력서 봐줘", "지원자 서류 검토" | `review-resume` |
 
+### 온디바이스 ML (Apple Neural Engine)
+
+| 이렇게 말하면 | 이 스킬이 작동 |
+|-------------|-------------|
+| "이미지에서 글자 읽어줘", "OCR 해줘", "텍스트 인식" | `/apple` → Vision OCR |
+| "이 이미지가 뭐야?", "사진 분류해줘" | `/apple` → Vision Classify |
+| "이미지 품질 점수 매겨줘", "미적 평가" | `/apple` → Vision Aesthetics |
+| "이 텍스트 감정이 어때?", "긍정/부정 분석" | `/apple` → NL Sentiment |
+| "이게 무슨 언어야?", "언어 감지" | `/apple` → NL Language |
+| "인명/지명/조직명 뽑아줘", "NER", "개체명" | `/apple` → NL NER |
+| "비슷한 단어 찾아줘", "유사 단어" | `/apple` → NL Embedding |
+| "이 소리가 뭐야?", "오디오 분류", "사운드 분석" | `/apple` → SoundAnalysis |
+| "Neural Engine 상태 확인", "ANE 디바이스" | `/apple` → devices |
+
 ## 시즌 사이클 (PDCA) vs 일상 운영
 
 ### 이중 트래킹 구조
@@ -280,6 +294,7 @@
 | `/marketing` | 마케팅 크리에이티브 툴킷 | "마케팅 아이디어 짜줘" |
 | `/north-star` | North Star Metric 정의 | "핵심 지표 정의해줘" |
 | `/proofread` | 문법/흐름 체크 | "교정해줘" |
+| `/apple [작업]` | Apple Neural Engine 온디바이스 ML (OCR·감정분석·이미지분류·사운드분류 등) | `/apple 이 이미지에서 텍스트 추출해줘`, `/apple 감정 분석해줘` |
 
 ## 에이전트 팀 운영 규칙 (토큰 비용 50% 절감)
 
@@ -360,6 +375,15 @@ Claude 전용 훅/슬래시 명령은 유지하되, Codex에서는 아래 스크
     - `make convert IN=input.docx OUT=output.pdf`
     - `./system/scripts/task-agent.sh format-converter --in input.pptx --out output.pdf`
 
+- `apple-neural-engine` (온디바이스 ML — Apple Neural Engine)
+  - skill: `system/apple-neural-engine/SKILL.md`
+  - cli: `system/apple-neural-engine/ane-cli/ane_tool` (컴파일 필요: `swiftc -O -o ane_tool ane_tool.swift`)
+  - 슬래시 명령: `/apple [작업]`
+  - 기능: OCR(한/영/일), 이미지 분류, 미적 평가, 감정 분석, 언어 감지, NER, 단어 유사도, 사운드 분류(303종), 온디바이스 번역, 온디바이스 LLM(macOS 26+)
+  - 요구사항: Apple Silicon M1+, macOS 15+
+  - 특징: 완전 오프라인, 무료, Neural Engine 하드웨어 가속
+  - 파이프라인 통합: 다른 스킬의 품질 보조 레이어로 활용 (OCR 교차검증, 감정 일관성, 미적 평가 등)
+
 ## 산출물 저장 규칙
 > 상세 규칙: `docs/reference/file-naming-convention.md`
 
@@ -435,6 +459,7 @@ workspace/26SS/
 - `reference/wacky willy operation plan/wacky-willy-operation-strategy.md` — 와키윌리 운영 전략 (통합본)
 - `generated/` — 빌드 스크립트로 생성된 문서 (PDF, PPTX, HTML 등)
 - `external/` — 외부 참고 자료 (AI 방법론 등)
+- `system/apple-neural-engine/` — Apple Neural Engine 온디바이스 ML 스킬 (SKILL.md, CLI 도구, 파이프라인 통합)
 
 ## PM-Skills 통합 (pm-skills by Paweł Huryn, MIT License)
 65개 PM 프레임워크가 FPOF에 통합되었습니다. 기존 스킬은 보강, 신규 스킬은 와키윌리 컨텍스트로 커스터마이징.

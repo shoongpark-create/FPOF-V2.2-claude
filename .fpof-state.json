@@ -98,8 +98,8 @@
   "operational": {
     "description": "PDCA와 독립적인 일상 운영 산출물 — 주간 리뷰, 회의록, 대시보드 등",
     "weekly": {
-      "latest_week": "w10",
-      "data_weeks": ["w06", "w07", "w08", "w09", "w10"],
+      "latest_week": "w13",
+      "data_weeks": ["w06", "w07", "w08", "w09", "w10", "w11"],
       "weeks": {
         "w09": {
           "artifacts": [
@@ -125,12 +125,17 @@
             "workspace/26SS/weekly/w10/meeting_exec-review_2026-03-09.md",
             "workspace/26SS/weekly/w10/review_board-summary_w10.md"
           ]
+        },
+        "w13": {
+          "artifacts": [
+            "workspace/26SS/weekly/w13/meeting_brand-hq-ceo_2026-03-25.md"
+          ]
         }
       }
     },
     "dashboard": {
       "refresh_cycle": "weekly",
-      "latest_data_week": "w10",
+      "latest_data_week": "w11",
       "artifacts": [
         "workspace/26SS/dashboard/board_sales.html",
         "workspace/26SS/dashboard/board_product-detail.html",
@@ -140,7 +145,8 @@
         "workspace/26SS/dashboard/data_per-detail.json",
         "workspace/26SS/dashboard/data_per-styles.json",
         "workspace/26SS/dashboard/data_cum-detail.json",
-        "workspace/26SS/dashboard/data_w10_full.json"
+        "workspace/26SS/dashboard/data_w10_full.json",
+        "workspace/26SS/dashboard/data_w11_full.json"
       ]
     },
     "season_strategy": {
