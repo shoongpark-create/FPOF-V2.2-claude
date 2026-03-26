@@ -27,6 +27,9 @@
 | `bta-guideline.md` | BTA(Basic·Trend·Accent) 상품/컬러 구성전략, 부서별 액션, 컬러 운용 원칙, 룩북 촬영 원칙 | 상품 기획, MD 플래닝, 디자인 스펙, 컬러 전략, 라인시트 작업 시 **항상** |
 | `business-unit-guide.md` | 사업부 업무 가이드 — 대표이사 보고 원칙, 스케줄링, 상품설계/발주설계 방향, CAD맵 체크 7대 항목, 품평 운영(3B 금지), 마케팅 기획안 B.A.M.P 검증, 광고컷 4유형, 셀럽 체크리스트, SNS 3균형, 콜라보 원칙, 매장 VM | 상품/마케팅/유통 전 영역 작업 시 **항상** |
 | `bcave-ax-strategy-guide.md` | 비케이브 AX 전략 — CEO 비전("AI 기반으로 일하는 조직"), AX 3레이어 프레임워크(개인·팀·조직), P-M-D별 AX 시나리오, 브랜드 확장 순서(와키윌리→커버낫→리), FPOF 전사 확장 아키텍처, AI 사용 5대 원칙 | AI/자동화 기획, FPOF 전사 확장, AX 전략 수립 시 |
+| `bcave-rework-process-innovation-guide.md` | 전사 방향성 가이드 — 5대 전환, 브랜드 감도 강화, AI 조직 변혁, 히트상품 프로세스, 유통 전략 재편 | 전사 방향성·조직 재설계 관련 작업 시 |
+| `file-naming-convention.json` | 파일 네이밍 & 폴더링 규칙 (구조화) — 접두사·날짜·주차·버전 형식, 폴더 구조, 정규식 검증 | **산출물 생성·저장 시 항상** |
+| `fpof-architecture.json` | FPOF 아키텍처 (구조화) — 4-Layer, PDCA 엔진, 에이전시 구성, QG 기준, 스킬-단계 매핑 | `/status` `/next` `quality-gate` 등 시스템 스킬 실행 시 |
 
 ### 전사 핵심 규칙 (요약)
 
@@ -71,6 +74,7 @@
 | `categories.json` | 유니/우먼스/용품 카테고리, 상품 전략 | 상품 기획 시 |
 | `channels.json` | 6개 채널 매출/목표/성장률 | 유통/마케팅 전략 시 |
 | `ip-bible.json` | 키키+11 캐릭터, 그룹(A/B/C), 관계도 | IP/캐릭터 활용 시 |
+| `operation-strategy.json` | 조직 구조(31명), 카테고리 유닛(4개), 회의체 프레임워크, 연간 캘린더 | 조직·인력·일정 관련 작업 시 |
 
 ## 패션 하우스 에이전시 (system/agents/)
 실무자의 자연어 요청을 해석하여 적합한 에이전시와 담당자가 작업합니다.
@@ -364,6 +368,102 @@ Claude 전용 훅/슬래시 명령은 유지하되, Codex에서는 아래 스크
 - `make route-skill PROMPT="요청문"` → 키워드 라우팅 결과 확인
 - `make check-output INPUT="workspace/26SS/season-strategy/plan_trend-brief.md"` → 산출물 체크리스트 확인
 
+## 이중 스킬 라우팅: FPOF vs Knowledge-Work 플러그인
+
+FPOF 내장 스킬(82개)과 Knowledge-Work 플러그인(18개 플러그인, 118개 스킬)이 공존합니다.
+자연어 요청 시 아래 규칙으로 적합한 스킬을 선택합니다.
+
+### 라우팅 3원칙
+
+1. **패션/브랜드 맥락 → FPOF 우선** — 와키윌리, 시즌, PDCA, BTA, 프리셋 관련 요청은 항상 FPOF 스킬
+2. **범용 비즈니스 도메인 → KW 플러그인** — HR, 법무, 재무, 엔지니어링, 운영 등 FPOF에 없는 영역
+3. **겹치는 영역 → 컨텍스트로 판단** — 아래 겹침 해소 테이블 참조
+
+### 도메인별 라우팅 맵
+
+| 도메인 | FPOF 전용 (패션 특화) | KW 플러그인 전용 (범용) | 겹침 영역 |
+|--------|---------------------|----------------------|----------|
+| **상품기획** | trend-research, brand-strategy, md-planning, line-sheet, design-spec, moodboard, techpack, costing-ve, qr-process | — | — |
+| **마케팅** | imc-strategy, copywriting, social-viral, visual-content | email-sequence, seo-audit, performance-report | campaign-plan, competitive-brief, draft-content, brand-review |
+| **데이터** | sales-analysis, insight-archiving | explore-data, build-dashboard, create-viz, statistical-analysis, validate-data | sql-queries, analyze |
+| **PM/전략** | PESTLE, Porter's, Ansoff, BMC, OST, 12개 디스커버리 스킬 | sprint-planning, stakeholder-update, metrics-review | write-spec(PRD), competitive-brief, roadmap, brainstorm |
+| **디자인** | pinterest-crawl, visual-generation, supanova 엔진 | accessibility-review, design-critique, design-handoff, design-system, ux-copy | user-research, research-synthesis |
+| **HR** | — | comp-analysis, draft-offer, interview-prep, onboarding, org-planning, people-report, performance-review, policy-lookup, recruiting-pipeline | — |
+| **법무** | draft-nda, privacy-policy | review-contract, triage-nda, compliance-check, legal-risk-assessment, vendor-check, signature-request, brief, meeting-briefing, legal-response | — |
+| **재무** | — | journal-entry, reconciliation, financial-statements, variance-analysis, close-management, sox-testing, audit-support | — |
+| **엔지니어링** | — | architecture, code-review, debug, deploy-checklist, documentation, incident-response, system-design, tech-debt, testing-strategy, standup | — |
+| **운영** | — | capacity-plan, change-request, compliance-tracking, process-doc, process-optimization, risk-assessment, runbook, status-report, vendor-review | — |
+| **영업** | — | account-research, call-prep, call-summary, competitive-intelligence, daily-briefing, draft-outreach, forecast, pipeline-review, create-an-asset | — |
+| **CS** | — | ticket-triage, draft-response, customer-escalation, customer-research, kb-article | — |
+| **생산성** | — | task-management, memory-management, start, update | — |
+| **검색** | — | search, digest, knowledge-synthesis, search-strategy, source-management | — |
+| **브랜드보이스** | tone-manner.json (FPOF 프리셋) | brand-voice-enforcement, discover-brand, guideline-generation | — |
+| **품질/QC** | quality-gate, gap-analysis, completion-report, pdca-iteration, retro | — | — |
+
+### 겹침 해소 규칙
+
+겹치는 영역에서 FPOF와 KW 플러그인 중 어떤 것을 사용할지 판단하는 기준:
+
+| 이렇게 말하면 | FPOF 스킬 사용 | KW 플러그인 사용 |
+|-------------|--------------|----------------|
+| "경쟁사 분석해줘" (와키윌리 맥락) | ✅ `competitive-battlecard` | — |
+| "경쟁사 분석해줘" (SaaS 제품/일반 비즈니스) | — | ✅ `marketing:competitive-brief` 또는 `sales:competitive-intelligence` |
+| "캠페인 기획해줘" (와키윌리 시즌 IMC) | ✅ `imc-strategy` | — |
+| "캠페인 기획해줘" (이메일 드립, B2B 리드) | — | ✅ `marketing:campaign-plan` |
+| "블로그 써줘" / "이메일 시퀀스" | — | ✅ `marketing:draft-content` / `marketing:email-sequence` |
+| "인스타 캡션 써줘" (와키윌리 톤) | ✅ `copywriting` | — |
+| "SEO 분석해줘" | — | ✅ `marketing:seo-audit` |
+| "PRD 만들어줘" (와키윌리 상품) | ✅ `create-prd` | — |
+| "PRD 만들어줘" (IT 서비스/기능) | — | ✅ `product-management:write-spec` |
+| "SQL 짜줘" (와키윌리 매출 데이터) | ✅ `sql-queries` | — |
+| "SQL 짜줘" (Snowflake/BigQuery 범용) | — | ✅ `data:write-query` |
+| "스프린트 계획" (와키윌리 시즌 작업) | ✅ `sprint-plan` | — |
+| "스프린트 계획" (개발팀 스프린트) | — | ✅ `product-management:sprint-planning` |
+| "유저 리서치 해줘" (와키윌리 타겟) | ✅ `user-personas` + `customer-journey-map` | — |
+| "유저 리서치 해줘" (UX 인터뷰 설계) | — | ✅ `design:user-research` |
+| "브레인스토밍 해줘" (와키윌리 상품) | ✅ `brainstorm-ideas-*` | — |
+| "브레인스토밍 해줘" (프로덕트 일반) | — | ✅ `product-management:product-brainstorming` |
+| "브랜드 톤 맞춰줘" (와키윌리 콘텐츠) | ✅ `tone-manner.json` 프리셋 | — |
+| "브랜드 가이드라인 만들어줘" (신규 브랜드) | — | ✅ `brand-voice:guideline-generation` |
+
+### 판단 기준 요약
+
+```
+요청 수신
+  ├─ 와키윌리/비케이브/패션/시즌/PDCA 키워드? ──→ FPOF 스킬
+  ├─ FPOF에 없는 도메인? (HR/법무/재무/엔지니어링/운영/영업/CS) ──→ KW 플러그인
+  ├─ 겹치는 영역?
+  │   ├─ 현재 PDCA 단계 작업 중? ──→ FPOF 스킬
+  │   ├─ 프리셋/브랜드 데이터 필요? ──→ FPOF 스킬
+  │   ├─ 외부 도구 연동 필요? (CRM, Slack, Snowflake 등) ──→ KW 플러그인
+  │   └─ 범용 프레임워크 요청? ──→ KW 플러그인
+  └─ 모호? ──→ 사용자에게 확인
+```
+
+### KW 플러그인 명시적 호출
+
+자연어 자동 라우팅 외에, `@도메인` 접두사로 KW 플러그인을 명시적으로 지정할 수 있습니다:
+
+| 접두사 | 플러그인 | 예시 |
+|--------|---------|------|
+| `@sales` | 영업 | "@sales 이 회사 조사해줘" |
+| `@marketing` | 마케팅 | "@marketing SEO 감사 해줘" |
+| `@data` | 데이터 | "@data 이 테이블 프로파일링해줘" |
+| `@pm` | 프로덕트 | "@pm 스펙 문서 써줘" |
+| `@design` | 디자인 | "@design 접근성 검토해줘" |
+| `@eng` | 엔지니어링 | "@eng 코드 리뷰해줘" |
+| `@hr` | HR | "@hr 면접 질문 만들어줘" |
+| `@legal` | 법무 | "@legal 계약서 검토해줘" |
+| `@finance` | 재무 | "@finance 분개 만들어줘" |
+| `@ops` | 운영 | "@ops 프로세스 문서화해줘" |
+| `@cs` | 고객지원 | "@cs 티켓 분류해줘" |
+| `@search` | 검색 | "@search 그 문서 찾아줘" |
+| `@brand` | 브랜드보이스 | "@brand 가이드라인 만들어줘" |
+| `@productivity` | 생산성 | "@productivity 태스크 정리해줘" |
+
+> **참고**: `@` 접두사 없이 자연어로 요청하면 위 라우팅 규칙에 따라 자동 판단합니다.
+> FPOF 슬래시 명령어(`/status`, `/brief` 등)는 기존대로 작동합니다.
+
 ## 온디맨드 태스크 에이전트 (PDCA 분리)
 아래 에이전트는 시즌 PDCA/브랜드 라우팅과 분리된 유틸리티 도구입니다.
 
@@ -445,20 +545,45 @@ workspace/26SS/
 ```
 
 ## 문서 (docs/)
-- `user-manual.md` — FPOF 사용 매뉴얼 (종합 레퍼런스)
-- `quickstart-guide.md` — 퀵스타트 가이드 (5분 온보딩)
-- `codex-compat-guide.md` — Codex 호환 실행 가이드
-- `task-agents/format-converter/README.md` — 온디맨드 문서 변환 에이전트
+
+### guide/ — 사용·설치·온보딩 가이드
+- `guide/user-manual.md` — FPOF 사용 매뉴얼 (종합 레퍼런스)
+- `guide/quickstart-guide.md` — 퀵스타트 가이드 (5분 온보딩)
+- `guide/wacky-willy-user-manual.md` — 비개발자용 와키윌리 사용 매뉴얼
+- `guide/plugin-routing-guide.md` — FPOF × Knowledge-Work 이중 라우팅 가이드 (118개 범용 스킬 통합)
+- `guide/pinterest-crawler-guide.md` — Pinterest 크롤러 설치/활용 가이드
+- `guide/telegram-setup-guide.md` — Claude Code × Telegram 연결 가이드
+
+### reference/ — 아키텍처·컨벤션·브랜드 원문 (사람이 읽는 원본)
+> `docs/reference/`는 기획팀이 작성한 **원문 아카이브**입니다.
+> AI가 작업 시 자동 참조하는 구조화 데이터는 `system/presets/`에 있습니다.
+> 동일 주제가 양쪽에 있을 때: presets(JSON) = AI 작업용, reference(MD) = 사람 열람용 원본.
+
 - `reference/file-naming-convention.md` — 파일 네이밍 & 폴더링 컨벤션
 - `reference/fpof-architecture.md` — 전체 시스템 아키텍처
-- `reference/bcave/bcave-ax-executive-summary.md` — 비케이브 AX 전략 경영진 요약 보고서
-- `reference/wacky willy operation plan/brand-strategy.md` — 브랜드 전략 원문
-- `reference/wacky willy operation plan/ip-bible.md` — IP 캐릭터 세계관 원문
-- `reference/wacky willy operation plan/core-target.md` — 코어 타겟 정의 원문
-- `reference/wacky willy operation plan/business-goals.md` — 5대 경영목표 원문
-- `reference/wacky willy operation plan/wacky-willy-operation-strategy.md` — 와키윌리 운영 전략 (통합본)
-- `generated/` — 빌드 스크립트로 생성된 문서 (PDF, PPTX, HTML 등)
-- `external/` — 외부 참고 자료 (AI 방법론 등)
+- `reference/wacky willy operation plan/brand-strategy.md` — 브랜드 전략 원문 (→ presets: `brand.config.json`)
+- `reference/wacky willy operation plan/ip-bible.md` — IP 캐릭터 세계관 원문 (→ presets: `ip-bible.json`)
+- `reference/wacky willy operation plan/core-target.md` — 코어 타겟 정의 원문 (→ presets: `personas.json`)
+- `reference/wacky willy operation plan/business-goals.md` — 5대 경영목표 원문 (→ presets: `brand.config.json`)
+- `reference/wacky willy operation plan/wacky-willy-operation-strategy.md` — 와키윌리 운영 전략 (통합본, 74p)
+
+### workshop/ — AI Committee 워크숍 가이드 (14개 세션)
+- `workshop/00_workshop-overview.md` — 워크숍 개요 및 아젠다
+- `workshop/01~14_*.md` — 세션별 상세 가이드 (전사 방향성, ANE, 에이전트 팀, 핀터레스트, 스킬 만들기, 회의록, 프레젠테이션, 문서 생성, 교정, 경쟁 분석, 고객 리서치, 데이터 분석, OKR, 디스커버리)
+
+### generated/ — 빌드·스크립트 생성물 (HTML, PDF 등)
+- `generated/workshop-presentation.html` — AI Committee 워크숍 프레젠테이션
+- `generated/bcave-ax-executive-report.html` — 비케이브 AX 전략 경영진 보고서
+- `generated/fpof-overview-presentation.html` — FPOF 시스템 소개 프레젠테이션
+- `generated/fpof-overview-mobile.html` — FPOF 모바일 소개 페이지
+- `generated/wacky-willy-user-manual.html` — 와키윌리 매뉴얼 HTML 버전
+- `generated/wacky-willy-presentation.md` — 와키윌리 AI 시스템 발표 자료 원고
+
+### external/ — 외부 참고 자료
+- `external/` — PPT 템플릿 등 외부 파일
+
+### 기타
+- `styles/` — CSS 스타일시트
 - `system/apple-neural-engine/` — Apple Neural Engine 온디바이스 ML 스킬 (SKILL.md, CLI 도구, 파이프라인 통합)
 
 ## PM-Skills 통합 (pm-skills by Paweł Huryn, MIT License)

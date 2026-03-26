@@ -581,8 +581,8 @@ FPOF V2.2/
 ## 📖 추가 참고자료
 
 - [CLAUDE.md](./CLAUDE.md) — FPOF 와키윌리 시스템 상세 설정
-- [docs/quickstart-guide.md](./docs/quickstart-guide.md) — 5분 퀵스타트 가이드
-- [docs/user-manual.md](./docs/user-manual.md) — 전체 사용자 매뉴얼
+- [docs/guide/quickstart-guide.md](./docs/guide/quickstart-guide.md) — 5분 퀵스타트 가이드
+- [docs/guide/user-manual.md](./docs/guide/user-manual.md) — 전체 사용자 매뉴얼
 
 ---
 

@@ -1230,8 +1230,8 @@ Check 완료 → QG4 → Act 또는 완료
 ```
 
 ### 📚 참고 자료
-- 사용 매뉴얼: `docs/user-manual.md`
-- 퀵스타트 가이드: `docs/quickstart-guide.md`
+- 사용 매뉴얼: `docs/guide/user-manual.md`
+- 퀵스타트 가이드: `docs/guide/quickstart-guide.md`
 
 ---
 
