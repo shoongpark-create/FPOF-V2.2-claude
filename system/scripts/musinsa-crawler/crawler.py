@@ -288,6 +288,7 @@ def save_to_excel(products: list[dict], output_path: str, meta: dict, embed_imag
         ("실시간 정보", 24),   # J
         ("옵션가", 12),       # K
         ("상품 URL", 50),     # L
+        ("이미지 URL", 55),   # M
     ]
     IMG_COL_IDX = 4  # D열 = 이미지 컬럼
 
@@ -355,10 +356,11 @@ def save_to_excel(products: list[dict], output_path: str, meta: dict, embed_imag
             p.get("labels", ""),                                          # I: 뱃지
             p["additional_info"],                                         # J: 실시간
             p.get("option_price", ""),                                    # K: 옵션가
-            p["product_url"],                                             # L: URL
+            p["product_url"],                                             # L: 상품 URL
+            p.get("image_url", ""),                                       # M: 이미지 URL
         ]
         # 텍스트 줄바꿈이 필요한 컬럼: B(브랜드), C(상품명), I(뱃지), J(실시간), L(URL)
-        WRAP_COLS = {2, 3, 9, 10, 12}
+        WRAP_COLS = {2, 3, 9, 10, 12, 13}
 
         for col_idx, value in enumerate(row_data, 1):
             cell = ws.cell(row=row_idx, column=col_idx, value=value)
@@ -369,7 +371,7 @@ def save_to_excel(products: list[dict], output_path: str, meta: dict, embed_imag
                 cell.alignment = Alignment(vertical="center")
             if col_idx in (5, 7, 8):  # 가격 컬럼 (E, G, H)
                 cell.number_format = '#,##0'
-            if col_idx == 12:  # URL 컬럼 (L)
+            if col_idx in (12, 13):  # URL 컬럼 (L, M)
                 cell.font = Font(color="0066CC", underline="single", size=9)
             if col_idx == IMG_COL_IDX:  # 이미지 컬럼 (D)
                 cell.alignment = Alignment(horizontal="center", vertical="center")

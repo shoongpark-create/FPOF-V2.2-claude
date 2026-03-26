@@ -26,7 +26,7 @@
 ```
 
 ## 출력
-- 엑셀(.xlsx): 순위, 브랜드, 상품명, 가격, 할인율, 뱃지, 실시간 정보, URL
+- 엑셀(.xlsx): 순위, 브랜드, 상품명, 상품이미지(셀 삽입), 가격, 할인율, 뱃지, 실시간 정보, 상품URL, 이미지URL
 - 저장 위치: `workspace/musinsa-ranking/ranking_YYYYMMDD/`
 
 ## 인수
