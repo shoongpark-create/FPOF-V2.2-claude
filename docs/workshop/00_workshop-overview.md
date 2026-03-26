@@ -24,6 +24,7 @@
 | 12 | **데이터 분석 & 대시보드** | 35분 | `/north-star` `/metrics` `/cohorts` `/ab-test` — KPI·코호트·A/B테스트 | `12_data-analytics-guide.md` |
 | 13 | **OKR & 스프린트 관리** | 30분 | `/okrs` `/sprint` `/roadmap` `/stakeholders` — 분기 목표·스프린트·회고 | `13_okr-sprint-guide.md` |
 | 14 | **디스커버리 & 아이디에이션** | 30분 | `/discover` `/brainstorm` `/pre-mortem` `/triage` — 아이디어→가설→실험 | `14_discovery-ideation-guide.md` |
+| 15 | **플러그인 에코시스템** | 35분 | 31개 플러그인 통합 — 프로젝트 단위 설치·이중 라우팅·@도메인 호출 | `15_plugin-ecosystem-guide.md` |
 
 ---
 
