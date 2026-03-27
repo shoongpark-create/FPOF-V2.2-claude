@@ -181,6 +181,7 @@
 | "데이터 뽑을 쿼리 짜줘", "SQL 만들어줘" | `sql-queries` |
 | "테스트 데이터 좀 만들어줘" | `dummy-dataset` |
 | "무신사 랭킹 가져와", "무신사에서 뭐가 잘 팔려?", "경쟁사 트렌드 수집" | `musinsa-ranking` |
+| "무신사 발매 뭐 있어?", "이번 주 신상 발매 체크해줘", "발매 예정 상품 수집", "경쟁 브랜드 신상 모니터링", "무신사 단독 발매 확인" | `musinsa-release` |
 
 ### 품질 & 검수 (QC 본부)
 
@@ -271,7 +272,8 @@
 | `/sheet [유형]` | 엑셀(XLSX) 시트 생성 | `/sheet line-sheet`, `/sheet otb` |
 | `/doc [유형]` | 워드(DOCX) 문서 생성 | `/doc campaign-plan`, `/doc press-release` |
 | `/pinterest [키워드]` | 핀터레스트 이미지 수집·키워드별 폴더 분류 | `/pinterest dopamine dressing`, `/pinterest 텐션업코디 50` |
-| `/musinsa [카테고리]` | 무신사 랭킹 수집·카테고리별 필터·엑셀 저장 | `/musinsa`, `/musinsa 상의 주간 여성` |
+| `/musinsa-ranking [카테고리]` | 무신사 랭킹 수집·카테고리별 필터·엑셀 저장 | `/musinsa-ranking`, `/musinsa-ranking 상의 주간 여성` |
+| `/musinsa-release [탭]` | 무신사 발매판 수집·발매일시·D-Day·와키윌리 적용 제안 | `/musinsa-release`, `/musinsa-release 발매 예정 여성` |
 | `/market-scan` | 거시환경 종합 분석 (SWOT+PESTLE+Porter's+Ansoff) | "외부 환경 스캔해줘" |
 | `/pricing` | 가격 전략 설계 | "가격 포지셔닝 잡아줘" |
 | `/business-model` | 비즈니스 모델 캔버스 탐색 | "비즈니스 모델 짜줘" |
