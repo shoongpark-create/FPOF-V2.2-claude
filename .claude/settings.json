@@ -1,4 +1,17 @@
 {
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash system/scripts/hooks/validate-filename.sh"
+          }
+        ]
+      }
+    ]
+  },
   "mcpServers": {
     "playwright": {
       "type": "stdio",
