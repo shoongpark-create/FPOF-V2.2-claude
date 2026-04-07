@@ -1,4 +1,4 @@
-# FPOF — 와키윌리 패션 하우스 오케스트레이션
+# FPOF — 와키윌리 패션 PDCA 오케스트레이션
 
 > AI가 와키윌리 브랜드의 시즌 기획부터 런칭까지를 함께 운영하는 시스템입니다.
 
@@ -34,10 +34,10 @@
 | 에이전시 | 핵심 스킬 |
 |----------|----------|
 | **전략기획실** | trend-research, brand-strategy, md-planning, line-sheet, PESTLE, Porter's, Ansoff, BMC, OST, PRD, OKR |
-| **크리에이티브 스튜디오** | moodboard, pinterest-crawl, design-spec, visual-generation |
-| **프로덕트 랩** | techpack, costing-ve, qr-process |
-| **마케팅 쇼룸** | imc-strategy, visual-content, copywriting, social-viral, customer-journey-map |
-| **데이터 인텔리전스** | sales-analysis, insight-archiving, ab-test, cohort, musinsa-ranking/release/trend |
+| **크리에이티브 스튜디오** | moodboard, **color-intelligence**, **design-generator**, pinterest-crawl, design-spec, visual-generation |
+| **프로덕트 랩** | techpack, costing-ve, **pattern-optimizer**, qr-process |
+| **마케팅 쇼룸** | imc-strategy, visual-content, **visual-factory**, copywriting, social-viral, customer-journey-map |
+| **데이터 인텔리전스** | **trend-radar**, **demand-optimizer**, sales-analysis, insight-archiving, ab-test, cohort, musinsa-ranking/release/trend |
 | **QC 본부** | quality-gate, gap-analysis, completion-report, pdca-iteration, retro |
 
 ## 자연어 → 스킬 라우팅
@@ -50,10 +50,10 @@
 ## PDCA 단계
 | 단계 | 에이전시 | 스킬 |
 |------|---------|------|
-| **Plan** | 전략기획실 | trend-research → brand-strategy → md-planning → line-sheet |
-| **Design** | 크리에이티브+프로덕트 랩 | moodboard → design-spec → visual-generation + costing-ve |
-| **Do** | 프로덕트 랩+마케팅 | techpack + imc-strategy → visual-content → copywriting → social-viral |
-| **Check** | 데이터+QC | sales-analysis → insight-archiving + gap-analysis → completion-report |
+| **Plan** | 전략기획실+데이터 인텔리전스 | **trend-radar** → trend-research → brand-strategy → md-planning → line-sheet |
+| **Design** | 크리에이티브+프로덕트 랩 | moodboard → **color-intelligence** → **design-generator** → design-spec → visual-generation + costing-ve / **pattern-optimizer** |
+| **Do** | 프로덕트 랩+마케팅 | techpack + imc-strategy → visual-content / **visual-factory** → copywriting → social-viral |
+| **Check** | 데이터+QC | **demand-optimizer** → sales-analysis → insight-archiving + gap-analysis → completion-report |
 | **Act** | QC 본부 | pdca-iteration (Match Rate < 90% 시 자동 루프) |
 
 ## 산출물 파일명 규칙

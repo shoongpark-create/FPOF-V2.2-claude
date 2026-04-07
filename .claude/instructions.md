@@ -38,6 +38,8 @@
 |-------------|------|
 | "무드보드 만들어줘" | `moodboard` |
 | "핀터레스트 이미지 수집" | `pinterest-crawl` |
+| "시즌 컬러", "컬러 팔레트", "컬러웨이 추천" | `color-intelligence` |
+| "디자인 시안 생성", "AI 디자인", "배리에이션" | `design-generator` |
 | "디자인 스펙 정리" | `design-spec` |
 | "이미지 만들어줘" | `visual-generation` |
 
@@ -45,6 +47,7 @@
 | 이렇게 말하면 | 스킬 |
 |-------------|------|
 | "원가 맞아?", "VE 해줘" | `costing-ve` |
+| "용척 계산", "마커 효율", "대안 소재", "패턴 최적화" | `pattern-optimizer` |
 | "테크팩 만들어줘" | `techpack` |
 | "리오더 진행해줘" | `qr-process` |
 
@@ -53,6 +56,7 @@
 |-------------|------|
 | "마케팅 전략 짜줘" | `imc-strategy` |
 | "화보 기획", "숏폼 기획" | `visual-content` |
+| "상품 이미지 생성", "채널별 에셋", "비주얼 팩토리" | `visual-factory` |
 | "카피 만들어줘", "인스타 캡션" | `copywriting` |
 | "바이럴 전략", "런칭 시퀀스" | `social-viral` |
 | "구매 여정 그려줘" | `customer-journey-map` |
@@ -61,13 +65,15 @@
 ### 데이터 & 분석
 | 이렇게 말하면 | 스킬 |
 |-------------|------|
+| "트렌드 레이더", "트렌드 스캔", "트렌드 스코어링" | `trend-radar` |
+| "리오더 타이밍", "재고 소진 예측", "QR 대상", "SPOT 후보" | `demand-optimizer` |
 | "매출 분석", "채널별 비교" | `sales-analysis` |
 | "인사이트 뽑아줘" | `insight-archiving` |
 | "A/B 테스트 결과" | `ab-test-analysis` |
 | "코호트 분석" | `cohort-analysis` |
 | "무신사 랭킹" | `musinsa-ranking` |
 | "무신사 발매" | `musinsa-release` |
-| "마켓 동향" | `musinsa-trend` → `market-trend-builder` |
+| "마켓 동향" | `market-intelligence` |
 
 ### 품질 & 검수
 | 이렇게 말하면 | 스킬 |
@@ -134,6 +140,12 @@
 | `/proofread` | 문법/흐름 체크 |
 | `/apple [작업]` | Apple Neural Engine ML |
 | `/market-intel` | MD 마켓 인텔리전스 |
+| `/trend-radar` | 트렌드 레이더 (멀티소스 스코어링) |
+| `/visual-factory` | 비주얼 팩토리 (채널별 에셋 생성) |
+| `/demand-optimizer` | 수요 예측 & 가격 최적화 |
+| `/design-generator` | AI 디자인 시안 생성 |
+| `/color-intelligence` | 시즌 컬러 인텔리전스 |
+| `/pattern-optimizer` | 패턴 & 소재 최적화 |
 
 ## 이중 스킬 라우팅 (FPOF vs KW 플러그인)
 

@@ -11,6 +11,7 @@ team:
 skills:
   - skills/marketing/imc-strategy.md
   - skills/marketing/visual-content.md
+  - skills/marketing/visual-factory.md
   - skills/marketing/copywriting.md
   - skills/marketing/social-viral.md
   - skills/pm-research/customer-journey-map.md
@@ -47,6 +48,20 @@ skills:
   - 온/오프라인 채널별 물량 배분 및 일정 조율
   - 마케팅 KPI 설정 (ROAS, 도달율, 전환율)
   - 글로벌 GTM (현지화 전략 포함)
+
+### 비주얼 팩토리 매니저 (Visual Factory Manager)
+- **역할**: 상품 이미지 → 채널별 비주얼 에셋 풀세트 자동 설계, 프롬프트 엔지니어링, 코디 조합, 카피 연동
+- **전문성**: AI 이미지 생성 디렉션, 채널별 규격 관리, 대량 비주얼 프로덕션
+- **이런 요청에 반응**:
+  - "상품 이미지 만들어줘", "채널별 비주얼 에셋 생성해줘"
+  - "무신사 상세 이미지 세트 만들어줘", "룩북 이미지 생성해줘"
+  - "SNS 콘텐츠 비주얼 만들어줘", "PDP 비주얼 세트 만들어줘"
+- **콘텐츠 디렉터와의 협업**: 실촬영 기획은 콘텐츠 디렉터, AI 기반 대량 생산은 비주얼 팩토리 매니저가 담당
+- **필수 참조 파일**:
+  - `presets/wacky-willy/visual-identity.json` (비주얼 스타일 기준)
+  - `presets/wacky-willy/channels.json` (채널 규격 및 우선순위)
+  - `presets/wacky-willy/tone-manner.json` (카피 톤 기준)
+  - `presets/wacky-willy/ip-bible.json` (캐릭터 활용 시)
 
 ### 콘텐츠 디렉터 (Content Director)
 - **역할**: 화보 촬영 기획, 영상 콘텐츠 제작, 룩북/캠페인 비주얼 디렉션, 시즌 비주얼 에셋 관리

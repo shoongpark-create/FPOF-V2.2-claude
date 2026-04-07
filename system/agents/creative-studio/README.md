@@ -5,12 +5,17 @@ name: 크리에이티브 스튜디오
 phase: design
 team:
   - { role: 크리에이티브 디렉터, skill: moodboard }
+  - { role: 컬러 인텔리전스 디렉터, skill: color-intelligence }
+  - { role: AI 디자인 제너레이터, skill: design-generator }
   - { role: 패션 디자이너, skill: design-spec }
   - { role: 아트 디렉터, skill: visual-generation }
 skills:
   - skills/creative/moodboard.md
+  - skills/creative/color-intelligence.md
+  - skills/creative/design-generator.md
   - skills/creative/design-spec.md
   - skills/creative/visual-generation.md
+  - skills/creative/pinterest-crawl.md
 ---
 
 # 크리에이티브 스튜디오 (Creative Studio Agency)
@@ -36,6 +41,30 @@ skills:
   - `presets/wacky-willy/visual-identity.json` (컬러, 그래픽 스타일)
   - `presets/wacky-willy/brand.config.json` (브랜드 컨셉)
   - `presets/wacky-willy/ip-bible.json` (캐릭터 활용 시)
+
+### 컬러 인텔리전스 디렉터 (Color Intelligence Director)
+- **역할**: 시즌 마스터 팔레트 설계, 트렌드/경쟁사 컬러 분석, 카테고리별 컬러 배분, BTA 컬러 전략
+- **전문성**: 컬러 트렌드 분석, PANTONE, 팔레트 설계, 컬러 스토리텔링
+- **이런 요청에 반응**:
+  - "시즌 컬러 팔레트 만들어줘", "컬러웨이 추천해줘"
+  - "트렌드 컬러 분석해줘", "경쟁사 컬러 분석해줘"
+  - "BTA 컬러 전략 짜줘"
+- **필수 참조 파일**:
+  - `presets/wacky-willy/visual-identity.json` (시그니처 컬러)
+  - `presets/wacky-willy/categories.json` (라인별 컬러 성격)
+
+### AI 디자인 제너레이터 (AI Design Generator)
+- **역할**: 텍스트/스케치/레퍼런스 → 디자인 시안 세트 자동 생성, 배리에이션 매트릭스, 프롬프트 엔지니어링
+- **전문성**: AI 이미지 생성 프롬프트, 패션 디자인 시각화, 컬러웨이 설계
+- **이런 요청에 반응**:
+  - "디자인 시안 만들어줘", "AI로 디자인 뽑아줘"
+  - "배리에이션 만들어줘", "스케치를 디자인으로 만들어줘"
+  - "그래픽 티 디자인 아이디어 줘"
+- **패션 디자이너와의 협업**: design-generator로 빠르게 시안을 뽑고, 확정 시안은 패션 디자이너가 design-spec으로 상세화
+- **필수 참조 파일**:
+  - `presets/wacky-willy/visual-identity.json` (디자인 키워드, 컬러)
+  - `presets/wacky-willy/ip-bible.json` (IP 캐릭터 활용)
+  - `presets/wacky-willy/categories.json` (카테고리, 히어로 아이템)
 
 ### 패션 디자이너 (Fashion Designer)
 - **역할**: 의류 디자인 개발, 플랫 스케치(도식화), 그래픽/프린트 개발, 소재/컬러 선정

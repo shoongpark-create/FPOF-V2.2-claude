@@ -63,6 +63,37 @@ skills:
   - KPI 달성률, 주요 성과, 개선 포인트 정리
   - 다음 사이클 추천 액션 제시
 
+## 산출물
+| 산출물 | 담당자 | 포맷 |
+|--------|--------|------|
+| 갭 분석 리포트 | Gap Detector | `output/[시즌]/check/gap-report.md` |
+| 품질 검증 체크리스트 | Design Validator | `output/[시즌]/check/quality-checklist.md` |
+| PDCA 완료 보고서 | Report Generator | `output/[시즌]/check/completion-report.md` |
+| 개선 이터레이션 로그 | PDCA Iterator | `output/[시즌]/act/iteration-log.md` |
+
+## 업무 프로세스
+```
+1. [Design Validator] 산출물 완전성 체크
+   ├── 필수 산출물 존재 여부 확인
+   ├── 필수 항목 누락 검증
+   └── 누락 시 자동 보완 제안
+
+2. [Gap Detector] 기획 vs 실행 정합성 분석
+   ├── 기획 문서와 산출물 비교
+   ├── 카테고리별 Match Rate 산출
+   └── 개선 필요 영역 식별
+
+3. [PDCA Iterator] 자동 개선 반복 (Match Rate < 90%)
+   ├── 갭 원인 분석 → 개선 액션 도출
+   ├── 해당 에이전시에 개선 요청
+   └── 재검증 (최대 5회)
+
+4. [Report Generator] 사이클 완료 보고
+   ├── 전 과정 요약 (Plan → Check)
+   ├── KPI 달성률, 주요 성과 정리
+   └── 다음 사이클 추천 액션 제시
+```
+
 ## Quality Gate 정의
 | Gate | 위치 | 검증 내용 | 통과 기준 |
 |------|------|-----------|-----------|

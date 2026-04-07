@@ -639,7 +639,7 @@ FPOF v3.0 (전사) — 목표 구조
 | **AI 도파민** | AI로 문제를 해결하고 즉각적 결과를 보며 느끼는 만족감과 동기 |
 | **문제은행** | 현장 직원들이 "AI로 해결할 수 없을까?" 하는 문제를 등록하는 시스템 |
 | **바이브 코딩** | 생성형 AI를 활용하여 자연어로 코드/서비스를 만드는 방식 |
-| **FPOF** | Fashion Product Orchestration Framework — 비케이브의 AI 오케스트레이션 시스템 |
+| **FPOF** | Fashion PDCA Orchestration Framework — 비케이브의 AI 오케스트레이션 시스템 |
 | **BTA** | Basic·Trend·Accent — 비케이브의 상품·컬러 구성 전략 |
 | **B.A.M.P** | Branding·Awareness·Management·Product — 마케팅 기획안 검증 프레임워크 |
 | **P-M-D** | Product·Marketing·Distribution — 패션 가치사슬의 3대 축 |

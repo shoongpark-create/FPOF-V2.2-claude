@@ -4,11 +4,18 @@ id: data-intelligence
 name: 데이터 인텔리전스
 phase: check
 team:
+  - { role: 트렌드 레이더 오퍼레이터, skill: trend-radar }
+  - { role: 디맨드 옵티마이저, skill: demand-optimizer }
   - { role: 트렌드 애널리스트, skill: sales-analysis }
   - { role: 인사이트 아키텍트, skill: insight-archiving }
 skills:
+  - skills/data/trend-radar.md
+  - skills/data/demand-optimizer.md
   - skills/data/sales-analysis.md
   - skills/data/insight-archiving.md
+  - skills/data/market-intelligence.md
+  - skills/data/musinsa-ranking.md
+  - skills/data/musinsa-release.md
   - skills/pm-analytics/ab-test-analysis.md
   - skills/pm-analytics/cohort-analysis.md
   - skills/pm-analytics/sql-queries.md
@@ -27,11 +34,39 @@ skills:
 외부 시장 데이터와 내부 성과 데이터를 분석하여 의사결정의 근거를 제공한다. 단순 분석을 넘어, 성공과 실패의 원인을 규명하고 **재생산 가능한 지식**으로 아카이빙하여 조직의 학습 자산을 축적한다.
 
 ## 담당 PDCA 단계
+- **Plan** (메인) — 트렌드 레이더로 멀티소스 시그널 수집·스코어링·BTA 매핑
 - **Plan** (서브) — 시장 리서처와 협업하여 트렌드 데이터 제공
 - **Check** (메인) — 매출 분석, KPI 리뷰, 갭 분석
 - **Act** (서브) — 인사이트 기반 개선 방향 제시
 
 ## 팀 구성
+
+### 트렌드 레이더 오퍼레이터 (Trend Radar Operator)
+- **역할**: 멀티소스 트렌드 시그널 수집·통합, 5축 스코어링, BTA 매핑, 트렌드 카드 생성
+- **전문성**: 트렌드 정량 분석, 시그널 오케스트레이션, 패션 트렌드 예측
+- **이런 요청에 반응**:
+  - "트렌드 레이더 돌려줘", "트렌드 스캔해줘"
+  - "요즘 뭐가 뜨고 있어?", "시즌 트렌드 스코어링해줘"
+  - "BTA 트렌드 매핑해줘", "트렌드 카드 만들어줘"
+  - "다음 시즌 뭐 준비해야 해?"
+- **오케스트레이션 대상**: `market-intelligence`, `musinsa-ranking`, `musinsa-release`, `pinterest-crawl`, `trend-research`
+- **필수 참조 파일**:
+  - `presets/wacky-willy/brand.config.json` (Relevance 스코어링 기준)
+  - `presets/wacky-willy/categories.json` (BTA 매핑, 카테고리 연결)
+  - `presets/wacky-willy/personas.json` (코어타겟 부합도)
+  - `presets/wacky-willy/visual-identity.json` (비주얼 시그널 필터)
+
+### 디맨드 옵티마이저 (Demand Optimizer)
+- **역할**: 판매 속도 분석, 재고 소진 예측, 리오더 타이밍/물량 산출, 가격 탄력성 분석, SPOT 후보 추천, BTA 리밸런싱
+- **전문성**: 수요 예측, 재고 최적화, 가격 전략, QR 의사결정
+- **이런 요청에 반응**:
+  - "리오더 타이밍 알려줘", "재고 소진 예측해줘"
+  - "QR 대상 뽑아줘", "SPOT 후보 추천해줘"
+  - "할인 전략 짜줘", "BTA 리밸런싱해줘"
+- **필수 참조 파일**:
+  - `workspace/[시즌]/dashboard/data_*.json` (판매 데이터)
+  - `presets/wacky-willy/categories.json` (BTA 전략)
+  - `presets/wacky-willy/brand.config.json` (경영목표 #3 QR 60%)
 
 ### 트렌드 애널리스트 (Trend Analyst)
 - **역할**: 매출 데이터 분석, KPI 대시보드, RFM/코호트 분석, 세그먼테이션, 경쟁사 대비 성과 비교

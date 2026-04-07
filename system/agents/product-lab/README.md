@@ -10,6 +10,7 @@ team:
 skills:
   - skills/product/techpack.md
   - skills/product/costing-ve.md
+  - skills/product/pattern-optimizer.md
   - skills/product/qr-process.md
 ---
 
@@ -25,6 +26,18 @@ skills:
 - **Do** (메인) — 테크팩 생성, 생산 관리, QC
 
 ## 팀 구성
+
+### 패턴 옵티마이저 (Pattern Optimizer)
+- **역할**: 원단 용척 계산, 마커 효율 분석, 대안 소재 매트릭스, 원가 절감 시뮬레이션, 지속가능성 분석
+- **전문성**: 패턴 배치 최적화, 소재 원가 분석, 지속가능 소재
+- **이런 요청에 반응**:
+  - "원단 사용량 최적화해줘", "용척 계산해줘"
+  - "마커 효율 분석해줘", "대안 소재 추천해줘"
+  - "원가 절감 소재 제안해줘", "지속가능성 분석해줘"
+- **costing-ve와의 협업**: pattern-optimizer가 소재 최적화 → costing-ve가 전체 원가 재계산
+- **필수 참조 파일**:
+  - `presets/wacky-willy/categories.json` (카테고리별 아이템)
+  - 디자인 스펙/테크팩 (소재/디테일 정보)
 
 ### 프로덕션 매니저 (Production Manager)
 - **역할**: 테크팩 작성, BOM(Bill of Materials) 산출, 원가계산, 샘플링 QC, 벌크 생산 관리
