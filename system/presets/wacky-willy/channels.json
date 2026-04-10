@@ -7,7 +7,11 @@
       "current_revenue_mm": 32074,
       "target_revenue_mm": 35502,
       "growth_pct": 11,
-      "priority": "maintain"
+      "priority": "maintain",
+      "pmf_verification": {
+        "primary_metrics": ["정상 판매율", "회전율"],
+        "pmf_signal": "정가 판매율 70%+ 및 리오더 발생 시 PMF 달성"
+      }
     },
     {
       "id": "fss",
@@ -17,7 +21,11 @@
       "target_revenue_mm": 10058,
       "growth_pct": 43,
       "priority": "high-growth",
-      "note": "성수 플래그십 + 명동 FSS (외국인 타겟)"
+      "note": "성수 플래그십 + 명동 FSS (외국인 타겟)",
+      "pmf_verification": {
+        "primary_metrics": ["객단가", "체류시간", "재방문율"],
+        "pmf_signal": "재방문율 상승 + 객단가 유지 시 브랜드 경험 PMF 확인"
+      }
     },
     {
       "id": "retail-other",
@@ -26,7 +34,11 @@
       "current_revenue_mm": 12266,
       "target_revenue_mm": 14435,
       "growth_pct": 18,
-      "priority": "maintain"
+      "priority": "maintain",
+      "pmf_verification": {
+        "primary_metrics": ["정상 판매율", "회전율"],
+        "pmf_signal": "안정적 회전율 유지 시 PMF 지속"
+      }
     },
     {
       "id": "own-mall",
@@ -35,7 +47,11 @@
       "current_revenue_mm": 3218,
       "target_revenue_mm": 4818,
       "growth_pct": 50,
-      "priority": "high-growth"
+      "priority": "high-growth",
+      "pmf_verification": {
+        "primary_metrics": ["전환율", "장바구니 이탈률", "재구매율"],
+        "pmf_signal": "전환율 개선 + 재구매율 25%+ 시 온라인 PMF 달성"
+      }
     },
     {
       "id": "online-other",
@@ -44,7 +60,11 @@
       "current_revenue_mm": 6376,
       "target_revenue_mm": 8036,
       "growth_pct": 26,
-      "priority": "grow"
+      "priority": "grow",
+      "pmf_verification": {
+        "primary_metrics": ["검색 전환율", "리뷰 점수", "찜 수"],
+        "pmf_signal": "리뷰 4.5+ 및 검색 전환율 상승 시 PMF 확인"
+      }
     },
     {
       "id": "global",
@@ -54,7 +74,11 @@
       "target_revenue_mm": 6896,
       "growth_pct": 718,
       "priority": "high-growth",
-      "note": "2026 대만 1호점, 이후 태국/중국 확장"
+      "note": "2026 대만 1호점, 이후 태국/중국 확장",
+      "pmf_verification": {
+        "primary_metrics": ["현지 타겟 인지도", "첫구매 전환율"],
+        "pmf_signal": "한국 PMF ≠ 해외 PMF — 시장마다 별도 검증 필요"
+      }
     }
   ],
   "total": {
@@ -62,5 +86,6 @@
     "target_revenue_mm": 79746,
     "growth_pct": 29
   },
-  "strategy": "高 손익 채널(FSS, 자사몰) 중심 성장 + 글로벌 718% 확장"
+  "strategy": "高 손익 채널(FSS, 자사몰) 중심 성장 + 글로벌 718% 확장",
+  "pmf_principle": "같은 상품이라도 채널에 따라 PMF 달성 여부가 다를 수 있다 — 채널별 독립 검증 필수"
 }
