@@ -1,10 +1,6 @@
 ---
 name: executive-summary
-description: |
-  프로젝트/마케팅 보고용 요약 스킬. 회의록, 이메일, 마케팅 리포트, Teams/Slack 대화 로그 등 긴 텍스트를
-  회사 양식에 맞춘 구조화된 요약 보고서(Summary, Key Metrics, Insights, Action Items)로 변환합니다.
-  다음 키워드가 포함된 요청 시 자동 트리거: '주간 보고', '임원 보고', '캠페인 결과 요약', '프로젝트 회의 요약',
-  '보고용으로 요약', '보고서 작성', '회의록 정리'.
+description: 긴 텍스트(회의록·이메일·Slack)를 회사 양식 구조화 요약으로 변환. 트리거 "주간 보고", "임원 보고", "회의록 정리".
 ---
 
 # Executive Summary Skill (업무용 요약 보고서)
